@@ -1,0 +1,175 @@
+name: 3d
+description: 'Cтудия архитектурной 3D визуализации и анимации'
+code: '3d'
+
+form:
+  tabs:
+    fields:
+      privacyPolicy:
+        type: richeditor
+        label: 'Политика конфиденциальности'
+        tab: 'Политика конфиденциальности'
+
+      separator1:
+        type: section
+        label: 'Имя сайта и лого'
+        # comment: 'Здесь начинается новая группа полей'
+        # cssClass: 'custom-separator'
+        tab: Главная информация
+    
+      sitename:
+        label: Имя сайта
+        type: text 
+        span: left
+        tab: Главная информация
+
+      logo:
+        label: Логотип 
+        type: fileupload  
+        mode: image
+        span: right  
+        tab: Главная информация
+        imageWidth: 200
+
+      info1:
+        label: ИП, ОсОО, ОАО  
+        placeholder: ИП Кошеренков Р.И.
+        span: left  
+        tab: Главная информация
+
+      info2:
+        label: ИНН   
+        placeholder: ИНН 503121397864
+        span: right  
+        tab: Главная информация
+
+      info3:
+        label: ОГРНИП, ОКПО   
+        placeholder: ОГРНИП 317505300043686
+        span: left  
+        tab: Главная информация
+      
+      about:
+        label: О компании
+        type: richeditor   
+        span: full  
+        tab: Главная информация
+      
+      teamlead:
+        label: Руководитель студии
+        placeholder: Фамилия Имя
+        span: full  
+        tab: Главная информация
+
+
+      email:
+        label: Электронный адрес
+        placeholder: email@gmail.com
+        span: left
+        tab: Контакты
+
+      phone:
+        label: Номер телефона
+        placeholder: +996 999 999 999
+        span: right
+        tab: Контакты
+        
+      address:
+        label: Адрес
+        placeholder: Ул. Название 87
+        span: left
+        tab: Контакты
+
+      worktime:
+        label: Часы работы
+        placeholder: ПН-ПТ 10:00 – 19:00, СБ-ВС ВЫХОДНОЙ
+        span: right
+        tab: Контакты
+      
+      routedescription:
+        type: textarea
+        label: Как добраться (Описание маршрута)
+        placeholder: Первый вагон из центра, поднимаетесь по лестнице направо, выходите из стеклянной двери направо и прямо по подземному переходу до конца, поднялись по лестнице, вышли на улицу, сразу за метро налево, чуть левее перед вами будет бизнес центр, вам туда, вход в здание с тыльной стороны.
+        span: full
+        tab: Контакты
+
+      separator2:
+        type: section
+        label: 'Мессенджеры'
+        tab: Контакты
+        
+      whatsapp:
+        label: WhatsApp
+        placeholder: 996123456789
+        comment: Добавить номер телефона, но без знака +, пробелов, скобок и тире
+        span: left
+        tab: Контакты
+
+      telegram:
+        label: Telegram
+        placeholder: '@useraname'
+        comment: Укажите '@useraname'
+        span: right
+        tab: Контакты
+
+      separator3:
+        type: section
+        label: 'Социальные сети'
+        comment: 'Если у вас нет соц.сети из списка, просто оставьте поле пустым.'
+        tab: Контакты
+      
+      vk:
+        label: Vk
+        placeholder: https://vk.com/profile
+        span: left
+        tab: Контакты
+
+      twitter:
+        label: Twitter
+        placeholder: https://x.com/profile
+        span: right
+        tab: Контакты
+
+      instagram:
+        label: Instagram
+        placeholder: https://www.instagram.com/profile
+        span: left
+        tab: Контакты
+
+      facebook:
+        label: Facebook
+        placeholder: https://www.facebook.com/profile
+        span: right
+        tab: Контакты
+     
+      # social:
+      #   type: repeater
+      #   label: Cоциальные сети
+      #   titleFrom: name  
+      #   tab: Контакты
+      #   span: full
+      #   form:
+      #     fields:
+      #       awesome_icon:
+      #         label: Социальная сеть ( Иконка )
+      #         span: left
+      #         type: awesomeiconslist
+      #         unicodeValue: false
+      #         emptyOption: false
+      #         iconTypes: brands
+      #         placeholder: Выбрать иконку
+      #       url:
+      #         label: Ссылка социальной сети
+      #         span: right
+      #         type: text
+      #         placeholder: https://www.instagram.com/  
+
+      map:
+        label: Карта (ссылка карты)                
+        placeholder: https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed
+        tab: Контакты  
+
+  
+
+        
+      

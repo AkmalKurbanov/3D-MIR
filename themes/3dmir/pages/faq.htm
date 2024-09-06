@@ -1,0 +1,84 @@
+title = "Faq"
+url = "/faq"
+layout = "default"
+meta_title = "FAQ - вопросы и ответы при заказе услуг в Production studio"
+meta_description = "В разделе FAQ вы можете найти ответы на интересующие вас вопросы при оформлении заказа на 3d визуализацию в Production studio 3D-MIR"
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/contacts"
+robot_index = "index"
+robot_follow = "follow"
+
+[records faq]
+activeOnly = 1
+areaSlug = "faq"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = 0
+recordPageSlug = "{{ :record }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="page">
+    
+    <div class="breadcrumbs">
+        <span
+            ><span
+                ><a href="{{'home' | page}}">Главная</a> »
+                <span class="breadcrumb_last" aria-current="page"
+                    >FAQ</span
+                ></span
+            ></span
+        >
+    </div>
+
+    <h1 class="page-title">FAQ</h1>
+
+    <div class="content">
+        {% for record in faq.items %}
+          
+          
+          <div class="collapse-container">
+            <button
+                class="collapse-btn collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-{{record.id}}"
+                aria-expanded="false"
+                aria-controls="faq-1"
+            >
+                <h2 class="collapse-title">
+                    {{record.description}}
+                </h2>
+                <svg
+                    class="collapse-btn__img"
+                    width="22"
+                    height="22"
+                    viewbox="0 0 22 22"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M11 1L11 21M1 11L21 11"
+                        stroke="#131313"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    ></path>
+                </svg>
+            </button>
+            <div class="collapse" id="collapse-{{record.id}}">
+                <div class="collapse-body">
+                   {{record.content|raw}}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+      
+        
+        
+    </div>
+    {% partial 'site/consultation' %}
+</div>

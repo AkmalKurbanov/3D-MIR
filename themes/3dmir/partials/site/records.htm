@@ -1,0 +1,52 @@
+{% for record in records.items %}
+  
+  {% if recordDetail.id == record.id %}
+  
+  {% elseif recordDetail.category.name == record.category.name %}
+    
+  {% else %}
+    <a href="{{ records.property('recordPage') ? records.property('recordPage')|page({(records.paramName('recordPageSlug')):(record.slug)}) }}" class="services-item">
+      <div class="services-item__img">
+          
+          {% set imageUrl = record.preview_image.getPath %}
+          {% set imageExtension = imageUrl|split('.')|last %}
+          
+          {% if imageExtension == 'gif' %}
+              <img src="{{ imageUrl }}" alt="{{ record.name }}">
+
+          {% elseif imageExtension == 'mp4' %}
+              <video autoplay="" loop="" preload="auto" muted="">
+                  <source src="{{ imageUrl }}">
+              </video>
+
+          {% else %}
+              {% set largeImageUrl = imageUrl|resize(1800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+              {% set mediumImageUrl = imageUrl|resize(1250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+              {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+              {% set extraSmallImageUrl = imageUrl|resize(400, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+              
+              {% set lazySrcset = extraSmallImageUrl ~ ' 400w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1250w, ' ~ largeImageUrl ~ ' 1800w' %}
+              {% set lazySizes = '(max-width: 400px) 100vw, (max-width: 800px) 50vw, (max-width: 1250px) 33vw, 25vw' %}
+              {% set lazySrc = extraSmallImageUrl %}
+              
+              <img src="{{ lazySrc }}"
+                  class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                  srcset="{{ lazySrcset }}"
+                  sizes="{{ lazySizes }}"
+                  data-lazy-srcset="{{ lazySrcset }}"
+                  data-lazy-sizes="{{ lazySizes }}"
+                  data-lazy-src="{{ lazySrc }}"
+                  alt="{{ record.name }}">
+          {% endif %}
+    
+    </div>
+    <span class="services-item__desc"></span>
+    <div class="services-item__title">{{ record.name }}</div>
+    <span href="service/3d-vizualizatsiya/index.htm" class="services-item__btn">
+        подробнее
+    </span>
+  </a>
+  {% endif %}
+  
+
+{% endfor %}

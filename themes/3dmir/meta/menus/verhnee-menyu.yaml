@@ -1,0 +1,20 @@
+items:
+    -
+        title: Demonstration
+        type: cms-page
+        code: ''
+        reference: home
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Projects
+        type: cms-page
+        code: ''
+        reference: projects
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: 'Верхнее меню'

@@ -1,0 +1,87 @@
+title = "About"
+url = "/about"
+layout = "default"
+meta_title = "О студии - общая информация, цели и услуги студии"
+meta_description = "Информация о студии 3d графики «Production studio 3D-MIR». Руководитель студии. Цели. Услуги студии, которые мы предоставляем нашим клиентам."
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/about"
+robot_index = "index"
+robot_follow = "follow"
+
+[categories]
+activeOnly = 1
+categoriesPage = 0
+categoriesPageSlug = "{{ :category }}"
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+limit = 10
+==
+<div class="page">
+		
+		<div class="breadcrumbs">
+			<span>
+				<span>
+					<a href="{{'home' | page}}">Главная</a> » <span class="breadcrumb_last" aria-current="page">О студии</span>
+				</span>
+			</span>
+		</div>
+		
+		<h1 class="page-title">О студии</h1>
+
+		<div class="about-container">
+			<div class="content">
+				{{this.theme.about | raw}}
+			</div>
+			{# <div class="about-container__img">
+				<img width="297" height="446" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20297%20446'%3E%3C/svg%3E" class="attachment-297x450 size-297x450" alt="Кошеренков Роман" loading="lazy" data-lazy-srcset="https://3d-rim.com/wp-content/uploads/2021/07/kosherenkov-roman.jpg 800w, https://3d-rim.com/wp-content/uploads/2021/07/kosherenkov-roman-200x300.jpg 200w, https://3d-rim.com/wp-content/uploads/2021/07/kosherenkov-roman-683x1024.jpg 683w, https://3d-rim.com/wp-content/uploads/2021/07/kosherenkov-roman-768x1152.jpg 768w, https://3d-rim.com/wp-content/uploads/2021/07/kosherenkov-roman-167x250.jpg 167w" data-lazy-sizes="(max-width: 297px) 100vw, 297px" data-lazy-src="https://3d-rim.com/wp-content/uploads/2021/07/kosherenkov-roman.jpg"><noscript><img width="297" height="446" src="../wp-content/uploads/2021/07/kosherenkov-roman.jpg" class="attachment-297x450 size-297x450" alt="Кошеренков Роман" loading="lazy" srcset="../wp-content/uploads/2021/07/kosherenkov-roman.jpg 800w, ../wp-content/uploads/2021/07/kosherenkov-roman-200x300.jpg 200w, ../wp-content/uploads/2021/07/kosherenkov-roman-683x1024.jpg 683w, ../wp-content/uploads/2021/07/kosherenkov-roman-768x1152.jpg 768w, ../wp-content/uploads/2021/07/kosherenkov-roman-167x250.jpg 167w" sizes="(max-width: 297px) 100vw, 297px"></noscript>				<!-- <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20297%20396'%3E%3C/svg%3E" alt="kosherenkov-roman" width="297" height="396" data-lazy-src="https://3d-rim.com/wp-content/themes/3d-rim-wpnew/images/assets/about.jpg"><noscript><img src="https://3d-rim.com/wp-content/themes/3d-rim-wpnew/images/assets/about.jpg" alt="kosherenkov-roman" width="297" height="396"></noscript> -->
+			</div> #}
+			{% if this.theme.teamlead %}
+				<div class="about-container__author"><span style="color:#131313">{{this.theme.teamlead}}</span> - Руководитель студии</div>
+				{% else %}
+			{% endif %}
+		</div>
+		<div class="row target">
+			<div class="col-12">
+				<h2 class="target-title">ЦЕЛИ ПРОДАКШН СТУДИИ</h2>
+			</div>
+			<div class="col-12 col-md-6">
+				<ul>
+					{% for category in categories.items %}
+					<li>
+					<a class="target__val" href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}">
+						{{category.name}}
+					</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-12 col-md-6">
+				<ul>
+					<li>
+						<span class="target__val">
+						разработка vr
+						</span>
+					</li>
+					<li>
+						<span class="target__val">
+						разработка на игровых движках
+						</span>
+					</li>
+					<li>
+						<span class="target__val">
+						разработка игровых моделей
+						</span>
+					</li>
+					<li>
+						<span class="target__val">
+						3d-конфигуратор
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="row-12 target-desc">
+				Нам доступны задачи любой сложности – от идеи до полной её реализации.
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,229 @@
+description = "Default layout"
+
+[genericForm]
+group = "Заявка на обратный звонок"
+rules[email] = "required|email"
+messages_success = "Ваша форма была успешно отправлена!"
+messages_errors = "В вашей заявке содержатся ошибки."
+reset_form = 1
+inline_errors = "disabled"
+sanitize_data = "disabled"
+anonymize_ip = "disabled"
+recaptcha_theme = "light"
+recaptcha_type = "image"
+recaptcha_size = "normal"
+emails_date_format = "d-m-Y"
+
+[genericForm modalForm]
+group = "Заявка на обратный звонок"
+rules[email] = "required|email"
+messages_success = "Ваша форма была успешно отправлена!"
+messages_errors = "В вашей заявке содержатся ошибки."
+reset_form = 1
+inline_errors = "disabled"
+sanitize_data = "disabled"
+anonymize_ip = "disabled"
+recaptcha_theme = "light"
+recaptcha_type = "image"
+recaptcha_size = "normal"
+emails_date_format = "d-m-Y"
+
+[genericForm reviewsModalForm]
+group = "Заявка на отзыв"
+rules[email] = "required|email"
+messages_success = "Ваша форма была успешно отправлена!"
+messages_errors = "В вашей заявке содержатся ошибки."
+reset_form = 1
+inline_errors = "disabled"
+sanitize_data = "disabled"
+anonymize_ip = "disabled"
+recaptcha_theme = "light"
+recaptcha_type = "image"
+recaptcha_size = "normal"
+emails_date_format = "d-m-Y"
+
+[SeoCmsPage]
+==
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+          {% if this.page.fileName == 'post.htm' or this.page.fileName == 'project-detail.htm' or this.page.fileName == 'service-detail.htm' or this.page.fileName == 'category.htm' %}
+            {% partial 'site/seo' %}    
+        
+            {% else %}
+              {% component 'SeoCmsPage' %}
+          {% endif %}
+        
+        
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="icon" type="image/png" href="{{ 'assets/images/favicon.svg'|theme }}">
+        <link href="{{ 'assets/css/theme.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/custom.css'|theme }}" rel="stylesheet">
+        
+        
+
+        {% if this.page.fileName == 'project-detail.htm' %}
+
+          <script>
+              function isDesktop() {
+                  return window.innerWidth >= 768; // Проверка на десктопные устройства
+              }
+
+              function loadStylesheet(url) {
+                  const link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = url;
+                  document.head.appendChild(link);
+              }
+
+              if (isDesktop()) {
+                  // Действия для десктопных устройств
+                  loadStylesheet('https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css');
+              } else {
+                  // Действия для мобильных устройств
+              }
+          </script>
+          
+        {% else %}
+        {% endif %}
+
+        <style>
+          
+          @media (max-width: 767px) {
+              .image-container [data-fancybox="gallery"] {
+                  pointer-events: none;
+                }
+          }
+                  
+          
+        </style>
+
+        {% styles %}
+    </head>
+    <body>
+
+        <!-- Header -->
+          {% partial 'site/header' %}
+        
+
+        <!-- Content -->
+          {% page %}
+        
+        <!-- Footer -->
+          {% partial 'site/footer' %}
+        
+        <!-- Scripts -->
+
+        <script type='text/javascript' src='{{ 'assets/javascript/jquery.min.js'|theme }}' id='jquery-core-js'></script>
+        
+        <script>
+         document.addEventListener('click', function(event) {
+            if (event.target.closest('.alert button.close')) {
+              const elements = [
+                document.getElementById('genericForm_forms_flash'),
+                document.getElementById('modalForm_forms_flash'),
+                document.getElementById('reviewsModalForm_forms_flash')
+              ];
+
+              elements.forEach(element => {
+                if (element) {
+                  element.innerHTML = ''; // Удаляет содержимое элемента
+                }
+              });
+            }
+          });
+
+
+          document.querySelectorAll('.form-bottom__btn, .form-modal__btn').forEach(button => {
+              button.addEventListener('click', function() {
+                  
+                  setTimeout(function() {
+                      // Очистка всех input и textarea
+                      document.querySelectorAll('.form-label input, .form-label textarea').forEach(field => {
+                          field.value = ''; // Очистка содержимого
+                      });
+                  }, 100);
+              });
+          });
+
+
+
+
+       
+
+
+        </script>
+
+        {% if this.page.fileName == 'projects.htm' or this.page.fileName == 'category-works.htm' %}
+          <script src="{{ 'assets/javascript/ajax/jquery.min.js'|theme }}"></script>
+          <script src="{{ 'assets/javascript/gamma/jquery.masonry.min.js'|theme }}"></script>
+          <script src="{{ 'assets/javascript/gamma/jquery.history.js'|theme }}"></script>
+          <script src="{{ 'assets/javascript/gamma/jquerypp.custom.js'|theme }}"></script>
+          <script src="{{ 'assets/javascript/gamma/masonry-index.js'|theme }}"></script>
+          <script src="{{ 'assets/javascript/app.js'|theme }}"></script>
+        
+        {% elseif this.page.fileName == 'project-detail.htm' %}
+          <script src="{{ 'assets/javascript/project-detail/app.js'|theme }}"></script>
+
+          <script>
+            function isDesktop() {
+                return window.innerWidth >= 768; // Проверка на десктопные устройства
+            }
+
+            function loadScript(url, onLoad) {
+                const script = document.createElement('script');
+                script.src = url;
+                script.onload = onLoad;
+                document.head.appendChild(script);
+            }
+
+            if (isDesktop()) {
+                // Действия для десктопных устройств
+                loadScript('https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js', () => {
+                    Fancybox.bind('[data-fancybox="gallery"]');
+                });
+            } else {
+                // Действия для мобильных устройств
+            }
+        </script>
+
+        
+        {% else %}
+          <script src="{{ 'assets/javascript/app.js'|theme }}"></script>
+        {% endif %}
+
+        {% if this.page.fileName == 'post.htm' or this.page.fileName == 'service-detail.htm' %}
+          <script>
+          let dataCaseTitle = document.querySelector('.update-case').getAttribute('data-case-title');
+          let dataCaseLink = document.querySelector('.update-case').getAttribute('data-case-link');
+          
+          // Устанавливаем текст в элемент с классом 'content-case-title'
+          document.querySelector('.content-case-title').textContent = dataCaseTitle;
+
+          // Устанавливаем значение атрибута 'href' в элемент с классом 'case__detail'
+          document.querySelector('.content-case__detail').setAttribute('href', dataCaseLink);
+
+             document.querySelectorAll('.update-case').forEach(function(element) {
+                  element.addEventListener('click', function() {
+                      let dataCaseTitle = this.getAttribute('data-case-title');
+                      let dataCaseLink = this.getAttribute('data-case-link');
+                      document.querySelector('.content-case-title').textContent = dataCaseTitle;
+                      document.querySelector('.content-case__detail').setAttribute('href', dataCaseLink);
+                  });
+              });
+
+              
+            </script>
+        {% endif %}
+            
+        {% snowboard all %}
+        {% scripts %}
+
+    </body>
+</html>

@@ -1,0 +1,73 @@
+[categories]
+activeOnly = 1
+categoriesPage = 0
+categoriesPageSlug = "{{ :category }}"
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+limit = 10
+
+[records services]
+activeOnly = 1
+areaSlug = "uslugi"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = "service-detail"
+recordPageSlug = "{{ :slug }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="top-menu">
+  <nav class="top-menu__container">
+    <div class="top-menu__contact">
+      <a href="tel:{{this.theme.phone}}" class="header__phone">{{this.theme.phone}}</a>
+      <a href="https://api.whatsapp.com/send?phone={{this.theme.whatsapp}}" class="header__social desktop whatsapp" target="_blank"></a>
+      <a href="tg://resolve?domain={{this.theme.telegram}}" class="header__social desktop telegram" target="_blank"></a>
+    </div>
+    <a class="menu-level-1" href="{{'home' | page}}">Главная</a>
+    <a class="menu-level-1" href="{{'services' | page}}">Услуги</a>
+    <div class="row menu-collapse">
+
+			{% for category in categories.items %}
+				<div class="col-12 col-sm-6 col-md-4 menu-level-2">
+					<div class="menu-level-2__header">
+						<button class="menu-level-2__btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#menu-collapse-{{category.id}}">
+							<svg width="17" height="18" viewbox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M15.5554 9.07107H1.41331M8.48438 2V16.1421" stroke="#818181" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							</svg>
+						</button>
+						<a href="{{categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)})}}" class="menu-level-2__title">{{category.name}}</a>
+					</div>
+					<div class="menu-level-3 collapse" id="menu-collapse-{{category.id}}">
+						<div class="menu-level-3__container">
+
+							{% if category.records|length %}
+          
+								{% for record in category.records %}
+									
+									
+									<a class="menu-level-3__link" href="{{ services.property('recordPage') ? services.property('recordPage')|page({(services.paramName('recordPageSlug')):(record.slug)}) }}">{{record.name}}</a>
+
+								
+								{% endfor %}
+								
+							{% endif %}
+
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+      
+
+     
+    </div>
+    <a class="menu-level-1" href="{{'about' | page}}">О студии</a>
+    <a class="menu-level-1" href="{{'projects' | page}}">Работы</a>
+    <a class="menu-level-1" href="{{'price' | page}}">Цены</a>
+    <a class="menu-level-1" href="{{'blog' | page}}">Блог</a>
+    <a class="menu-level-1" href="{{'faq' | page}}">FAQ</a>
+    <a class="menu-level-1" href="{{'reviews' | page}}">Отзывы</a>
+    <a class="menu-level-1" href="{{'contacts' | page}}">Контакты</a>
+  </nav>
+</div>

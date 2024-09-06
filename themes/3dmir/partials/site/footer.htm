@@ -1,0 +1,105 @@
+[categories]
+activeOnly = 1
+categoriesPage = "category"
+categoriesPageSlug = "{{ :category }}"
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+limit = 10
+==
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer__container">
+            <div class="footer-info">
+                
+                {% set logoPath = this.theme.logo.getPath %}
+                {% set isSvg = logoPath ends with '.svg' %}
+
+                <img
+                    src="{% if isSvg %}{{ logoPath }}{% else %}{{ logoPath | resize(136, 'auto', { mode: 'crop', quality: '80', extension: 'webp' }) }}{% endif %}"
+                    alt="{{ this.theme.sitename }}"
+                    data-lazy-src="{{ logoPath }}"
+                />
+    
+                {% if this.theme.info1 or this.theme.info2 or this.theme.info3 %}
+                  <div class="footer-info-desc">
+                    {% if this.theme.info1 %}
+                      {{this.theme.info1}} <br>
+                      {% else %}
+                    {% endif %}
+                    {% if this.theme.info2 %}
+                      {{this.theme.info2}} <br>
+                      {% else %}
+                    {% endif %}
+                    {% if this.theme.info3 %}
+                      {{this.theme.info3}} <br>
+                      {% else %}
+                    {% endif %}
+                  </div>
+                  {% else %}
+                {% endif %}
+                
+            </div>
+            <nav class="footer-menu footer-info-2">
+                <a href="{{'services' | page}}" class="footer-menu__title"
+                    >Услуги</a
+                >
+                {% for category in categories.items %}
+                  <a
+                    href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}"
+                    class="footer-menu__link"
+                    >{{category.name}}</a
+                >
+                {% endfor %}
+                
+                
+            </nav>
+            <nav class="footer-menu footer-info-3">
+                <a href="{{'about'|page}}" class="footer-menu__title"
+                    >{{'about'|title}}</a
+                >
+                <a href="{{'projects'|page}}" class="footer-menu__link">Работы</a>
+                <a href="{{'price'|page}}" class="footer-menu__link">Цены</a>
+                <a href="{{'blog'|page}}" class="footer-menu__link">Блог</a>
+                <a href="{{'faq'|page}}" class="footer-menu__link">FAQ</a>
+                <a href="{{'reviews'|page}}" class="footer-menu__link">Отзывы</a> 
+            </nav>
+            <div class="footer-contacs">
+                <div class="footer-contacs__title">контакты</div>
+                <div class="footer-contacs__info">
+                    {{this.theme.address}}
+                </div>
+                <a href="tel:{{this.theme.phone}}" class="footer-contacs__info"
+                    >{{this.theme.phone}}</a
+                >
+                <a href="mailto:{{this.theme.email}}" class="footer-contacs__info"
+                    >{{this.theme.email}}</a
+                >
+            </div>
+
+            <div class="footer-social">
+                <div class="footer-social__title">мы в соцсетях</div>
+                <div class="footer-social__container">
+
+                    {% partial 'site/social' %}
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="footer-container__bottom">
+            <div class="footer-bottom__1">
+                © {{ "now"|date("Y") }} {{this.theme.sitename}}
+            </div>
+            <div class="footer-bottom__2">
+                <a href="{{'privacy-policy' | page}}">Политика конфиденциальности</a>
+            </div>
+            <div class="footer-bottom__3">
+                <a href="https://wpnew.ru" target="_blank"
+                    >Разработка сайта - WPNEW</a
+                >
+            </div>
+        </div>
+    </div>
+</footer>

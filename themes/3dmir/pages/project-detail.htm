@@ -1,0 +1,323 @@
+title = "Project detail"
+url = "/project-detail/:slug"
+layout = "default"
+is_hidden = 0
+
+[recordDetail]
+activeOnly = 1
+recordSlug = "{{ :slug }}"
+areaSlug = "portfolio"
+categorySlug = "{{ :category }}"
+useMainCategory = 1
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+==
+<div class="page">
+    <div class="breadcrumbs">
+        <span><span><a href="{{ 'home'|page }}">Главная</a> »
+            <span><a href="{{ 'projects'|page }}">Проекты</a> »
+                <span class="breadcrumb_last" aria-current="page">{{ recordDetail.name }}</span></span></span></span>
+            </div>
+            <h1 class="page-title">{{ recordDetail.name }}</h1>
+            <div class="content">
+                <div class="vc_row wpb_row vc_row-fluid">
+                    {% if recordDetail.getAttributeValueBySlug('3d_spritespin_slider') %}
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    <div class="wpb_text_column wpb_content_element">
+                                        <div class="wpb_wrapper">
+                                            <div class="spritespin"
+                                                 data-slider-items='[{% if recordDetail.images|length %}{% for image in recordDetail.images %}"{{ image.getPath | resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) }}"{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}]'>
+                                                <div class="spritespin__frame"></div>
+                                                <input class="spritespin__slider" type="range" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    <h2>Описание</h2>
+                                    {{ recordDetail.content| raw }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif recordDetail.getAttributeValueBySlug('gallery') %}
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    {% if recordDetail.images|length %}
+                                        {% set images = recordDetail.images|slice(0, 4) %}
+                                        {% for image in images %}
+                                            <div class="wpb_column vc_column_container vc_col-sm-6">
+                                                <div class="vc_column-inner">
+                                                    <div class="wpb_wrapper">
+                                                        <div class="wpb_text_column wpb_content_element">
+                                                            <div class="wpb_wrapper">
+                                                                <div class="image-container">
+                                                                    {% set imageUrl = image.getPath %}
+                                                                    {% set imageExtension = imageUrl|split('.')|last %}
+
+                                                                    {% if imageExtension == 'gif' %}
+                                                                        <img src="{{ imageUrl }}" alt="{{ recordDetail.name }}" style="width:100%">
+                                                                    {% else %}
+                                                                        {% set largeImageUrl = imageUrl|resize(720, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set mediumImageUrl = imageUrl|resize(550, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set smallImageUrl = imageUrl|resize(430, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        
+                                                                        {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 430w, ' ~ mediumImageUrl ~ ' 540w, ' ~ largeImageUrl ~ ' 720w' %}
+                                                                        {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                                                                        
+                                                                        <a href="{{ imageUrl | resize(1200, auto, { mode: 'crop', quality: '80', extension: 'webp' }) }}" data-fancybox="gallery">
+                                                                            <img src="{{ extraSmallImageUrl }}"
+                                                                                class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                                srcset="{{ lazySrcset }}"
+                                                                                sizes="{{ lazySizes }}"
+                                                                                alt="{{ recordDetail.name }}"
+                                                                                style="width:100%;">
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    <h2>Описание</h2>
+                                    {{ recordDetail.content| raw }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif recordDetail.getAttributeValueBySlug('single_img') %}
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    {% if recordDetail.images|length %}
+                                        {% set images = recordDetail.images|slice(0, 1) %}
+                                        {% for image in images %}
+                                            <div class="wpb_column vc_column_container vc_col-sm-12">
+                                                <div class="vc_column-inner">
+                                                    <div class="wpb_wrapper">
+                                                        <div class="wpb_text_column wpb_content_element">
+                                                            <div class="wpb_wrapper">
+                                                                <div class="image-container">
+                                                                    {% set imageUrl = image.getPath %}
+                                                                    {% set imageExtension = imageUrl|split('.')|last %}
+
+                                                                    {% if imageExtension == 'gif' %}
+                                                                        <img src="{{ imageUrl }}" alt="{{ recordDetail.name }}" style="width:100%">
+                                                                    {% else %}
+                                                                        {% set largeImageUrl = imageUrl|resize(720, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set mediumImageUrl = imageUrl|resize(550, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set smallImageUrl = imageUrl|resize(430, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        
+                                                                        {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 430w, ' ~ mediumImageUrl ~ ' 540w, ' ~ largeImageUrl ~ ' 720w' %}
+                                                                        {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                                                                        
+                                                                        <a href="{{ imageUrl | resize(1200, auto, { mode: 'crop', quality: '80', extension: 'webp' }) }}" data-fancybox="gallery">
+                                                                            <img src="{{ extraSmallImageUrl }}"
+                                                                                class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                                srcset="{{ lazySrcset }}"
+                                                                                sizes="{{ lazySizes }}"
+                                                                                alt="{{ recordDetail.name }}"
+                                                                                style="width:100%;">
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    <h2>Описание</h2>
+                                    {{ recordDetail.content| raw }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif recordDetail.getAttributeValueBySlug('double_img') %}
+                        <div class="wpb_column vc_column_container vc_col-sm-12">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    {% if recordDetail.images|length %}
+                                        {% set images = recordDetail.images|slice(0, 2) %}
+                                        {% for image in images %}
+                                            <div class="wpb_column vc_column_container vc_col-sm-6">
+                                                <div class="vc_column-inner">
+                                                    <div class="wpb_wrapper">
+                                                        <div class="wpb_text_column wpb_content_element">
+                                                            <div class="wpb_wrapper">
+                                                                <div class="image-container">
+                                                                    {% set imageUrl = image.getPath %}
+                                                                    {% set imageExtension = imageUrl|split('.')|last %}
+
+                                                                    {% if imageExtension == 'gif' %}
+                                                                        <img src="{{ imageUrl }}" alt="{{ recordDetail.name }}" style="width:100%">
+                                                                    {% else %}
+                                                                        {% set largeImageUrl = imageUrl|resize(730, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set mediumImageUrl = imageUrl|resize(550, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set smallImageUrl = imageUrl|resize(430, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                        
+                                                                        {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 430w, ' ~ mediumImageUrl ~ ' 540w, ' ~ largeImageUrl ~ ' 730w' %}
+                                                                        {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                                                                        
+                                                                        <a href="{{ imageUrl | resize(1200, auto, { mode: 'crop', quality: '80', extension: 'webp' }) }}" data-fancybox="gallery">
+                                                                            <img src="{{ extraSmallImageUrl }}"
+                                                                                class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                                srcset="{{ lazySrcset }}"
+                                                                                sizes="{{ lazySizes }}"
+                                                                                alt="{{ recordDetail.name }}"
+                                                                                style="width:100%;">
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-12">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    <h2>Описание</h2>
+                                    {{ recordDetail.content| raw }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif recordDetail.getAttributeValueBySlug('one_big_three_small_img') %}
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    {% if recordDetail.images|length %}
+                                        {% set images = recordDetail.images|slice(0, 4) %}
+                                        {% for image in images %}
+                                            {% if loop.first %}
+                                                <div class="wpb_column vc_column_container vc_col-sm-12">
+                                                    <div class="vc_column-inner">
+                                                        <div class="wpb_wrapper">
+                                                            <div class="wpb_text_column wpb_content_element">
+                                                                <div class="wpb_wrapper">
+                                                                    <div class="image-container">
+                                                                        
+                                                                        {% set imageUrl = image.getPath %}
+                                                                        {% set imageExtension = imageUrl|split('.')|last %}
+
+                                                                        {% if imageExtension == 'gif' %}
+                                                                            <img src="{{ imageUrl }}" alt="{{ recordDetail.name }}" style="width:100%">
+                                                                        {% else %}
+                                                                            {% set largeImageUrl = imageUrl|resize(720, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                            {% set mediumImageUrl = imageUrl|resize(550, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                            {% set smallImageUrl = imageUrl|resize(430, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                            {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                            
+                                                                            {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 430w, ' ~ mediumImageUrl ~ ' 540w, ' ~ largeImageUrl ~ ' 720w' %}
+                                                                            {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                                                                            
+                                                                            <a href="{{ imageUrl | resize(1200, auto, { mode: 'crop', quality: '80', extension: 'webp' }) }}" data-fancybox="gallery">
+                                                                                <img src="{{ extraSmallImageUrl }}"
+                                                                                    class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                                    srcset="{{ lazySrcset }}"
+                                                                                    sizes="{{ lazySizes }}"
+                                                                                    alt="{{ recordDetail.name }}"
+                                                                                    style="width:100%;">
+                                                                            </a>
+                                                                        {% endif %}
+
+    
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% else %}
+                                                    <div class="wpb_column vc_column_container vc_col-sm-4">
+                                                      <div class="vc_column-inner">
+                                                          <div class="wpb_wrapper">
+                                                              <div class="wpb_text_column wpb_content_element">
+                                                                  <div class="wpb_wrapper">
+                                                                      <div class="image-container">
+                                                                          
+                                                                          {% set imageUrl = image.getPath %}
+                                                                          {% set imageExtension = imageUrl|split('.')|last %}
+
+                                                                          {% if imageExtension == 'gif' %}
+                                                                              <img src="{{ imageUrl }}" alt="{{ recordDetail.name }}" style="width:100%">
+                                                                          {% else %}
+                                                                              {% set largeImageUrl = imageUrl|resize(720, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                              {% set mediumImageUrl = imageUrl|resize(550, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                              {% set smallImageUrl = imageUrl|resize(430, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                              {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                                                                              
+                                                                              {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 430w, ' ~ mediumImageUrl ~ ' 540w, ' ~ largeImageUrl ~ ' 720w' %}
+                                                                              {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                                                                              
+                                                                              <a href="{{ imageUrl | resize(1200, auto, { mode: 'crop', quality: '80', extension: 'webp' }) }}" data-fancybox="gallery">
+                                                                                  <img src="{{ extraSmallImageUrl }}"
+                                                                                      class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                                      srcset="{{ lazySrcset }}"
+                                                                                      sizes="{{ lazySizes }}"
+                                                                                      alt="{{ recordDetail.name }}"
+                                                                                      style="width:100%;">
+                                                                              </a>
+                                                                          {% endif %}
+
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  
+                                                  
+                                                  </div>
+                                              {% endif %}  
+                                            {% endfor %}
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wpb_column vc_column_container vc_col-sm-6">
+                                <div class="vc_column-inner">
+                                    <div class="wpb_wrapper">
+                                        <h2>Описание</h2>
+                                        {{ recordDetail.content| raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% partial 'site/consultation' %}
+                                 
+               
+            </div>

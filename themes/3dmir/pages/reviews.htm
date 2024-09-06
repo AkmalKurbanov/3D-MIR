@@ -1,0 +1,146 @@
+title = "Reviews"
+url = "/reviews"
+layout = "default"
+meta_title = "Отзывы клиентов о работе со студией по 3D графике"
+meta_description = "Здесь вы поможете посмотреть и прочитать отзывы и благодарственные письма от наших клиентов. Для которых были выполнены услуги по компьютерной 3d графике."
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/reviews"
+robot_index = "index"
+robot_follow = "follow"
+
+[records]
+activeOnly = 1
+areaSlug = "otzyvy"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = 0
+recordPageSlug = "{{ :record }}"
+allowLimit = 1
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="page">
+  <div class="breadcrumbs">
+    <span>
+      <span>
+        <a href="{{'home' | page}}">Главная</a> » <span class="breadcrumb_last" aria-current="page">Отзывы</span>
+      </span>
+    </span>
+  </div>
+  <h1 class="page-title page-title__reviews">Отзывы</h1>
+  <button class="reviews-form-btn" data-bs-toggle="modal" data-bs-target="#review-modal">+&nbsp;добавить свой отзыв</button>
+  <div class="content">
+    
+    {% for record in records.items %}
+      <div class="page-review-item">
+        <div class="page-review-item__title"> {{record.name}} </div>
+        <div class="page-review-item__date">Опубликовано {{record.date | date("d.m.Y, H:i")}}</div>
+        <div class="page-review-item__text">
+          <p>{{record.description}}</p>
+        </div>
+
+         {% if record.files %}
+                
+            {% for file in record.files %}
+              <a class="review-item__link" target="_blank" href="{{ file.getPath }}">
+                <svg class="review-item__link-img" width="30" height="30" viewbox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                  <path d="M28.9713 8.11857L21.3284 0.176836C21.2196 0.0638672 21.0695 0 20.9127 0H9.52145C8.24662 0 7.20945 1.03676 7.20945 2.31105V10.3846H2.59303C1.63924 10.3846 0.863281 11.1604 0.863281 12.1139V20.7708C0.863281 21.7243 1.63924 22.5 2.59303 22.5H7.20945V27.693C7.20945 28.9651 8.24662 30 9.52145 30H26.8205C28.0954 30 29.1325 28.9656 29.1325 27.6943V8.51865C29.1325 8.36947 29.0747 8.22609 28.9713 8.11857ZM21.0556 1.55748L27.3298 8.07691H21.0556V1.55748ZM2.59303 21.3462C2.27545 21.3462 2.01717 21.0881 2.01717 20.7708V12.1139C2.01717 11.7966 2.27551 11.5385 2.59303 11.5385H18.1721C18.4896 11.5385 18.7479 11.7966 18.7479 12.1139V20.7708C18.7479 21.0881 18.4896 21.3462 18.1721 21.3462H2.59303ZM27.9787 27.6943C27.9787 28.3294 27.4591 28.8462 26.8205 28.8462H9.52145C8.88283 28.8462 8.36328 28.3289 8.36328 27.693V22.5H18.1721C19.1258 22.5 19.9018 21.7243 19.9018 20.7708V12.1139C19.9018 11.1604 19.1258 10.3846 18.1721 10.3846H8.36328V2.31105C8.36328 1.67291 8.88283 1.15383 9.52145 1.15383H19.9017V8.65383C19.9017 8.97246 20.1601 9.23074 20.4787 9.23074H27.9787V27.6943Z" fill="#C59358"></path>
+                  <path d="M7.76279 14.6429C7.57124 14.3939 7.33347 14.2322 7.04953 14.1579C6.86472 14.1083 6.4681 14.0835 5.85961 14.0835H4.25391V19.0392H5.25451V17.1698H5.90695C6.35994 17.1698 6.70587 17.1461 6.94476 17.0988C7.12054 17.0605 7.29351 16.9822 7.46367 16.8638C7.63382 16.7455 7.7741 16.5827 7.88454 16.3754C7.99499 16.1681 8.05019 15.9123 8.05019 15.608C8.05013 15.2136 7.95433 14.892 7.76279 14.6429ZM6.90585 16.0069C6.83039 16.1174 6.72615 16.1985 6.59314 16.2503C6.46013 16.3022 6.19652 16.3281 5.80213 16.3281H5.25451V14.9219H5.73791C6.09849 14.9219 6.33849 14.9331 6.45791 14.9557C6.62015 14.985 6.75427 15.0582 6.86015 15.1754C6.96609 15.2926 7.01906 15.4413 7.01906 15.6216C7.01912 15.7681 6.98132 15.8965 6.90585 16.0069Z" fill="#C59358" ></path>
+                  <path d="M12.8595 15.4374C12.7513 15.1207 12.5935 14.8531 12.3862 14.6345C12.1789 14.4159 11.9298 14.2638 11.6391 14.1781C11.4228 14.115 11.1084 14.0835 10.696 14.0835H8.86719V19.0392H10.7501C11.1197 19.0392 11.4149 19.0042 11.6357 18.9343C11.931 18.8397 12.1654 18.7079 12.3389 18.5388C12.5687 18.3157 12.7456 18.0239 12.8696 17.6633C12.971 17.3681 13.0217 17.0165 13.0217 16.6086C13.0217 16.1444 12.9676 15.754 12.8595 15.4374ZM11.8859 17.4724C11.8183 17.6944 11.731 17.8538 11.6239 17.9507C11.5169 18.0476 11.3822 18.1163 11.22 18.1569C11.096 18.1884 10.8943 18.2042 10.6149 18.2042H9.86779V14.9219H10.3174C10.7253 14.9219 10.9991 14.9376 11.1388 14.9692C11.3258 15.0097 11.4802 15.0875 11.6019 15.2025C11.7236 15.3174 11.8183 15.4774 11.8859 15.6825C11.9535 15.8875 11.9873 16.1816 11.9873 16.5648C11.9873 16.9478 11.9535 17.2504 11.8859 17.4724Z" fill="#C59358" ></path>
+                  <path d="M17.2762 14.9219V14.0835H13.8789V19.0392H14.8795V16.9332H16.9483V16.0948H14.8795V14.9219H17.2762Z" fill="#C59358" ></path>
+                </svg>
+                Читать отзыв на официальном бланке организации
+              </a>
+                    
+                
+            {% endfor %}
+              
+          {% endif %}
+
+        
+      </div>
+    {% endfor %}
+    
+    
+  {% if records.lastPage() > 1 %}
+    <ul class="pagination">
+        <li class="page-item{% if not records.previousPageUrl() %} disabled{% endif %}">
+    <a class="page-link" href="{{ records.previousPageUrl() }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+    </a>
+</li>
+
+        {% for page in 1..records.lastPage() %}
+            <li class="page-item{% if page == records.currentPage() %} active{% endif %}">
+                <a class="page-link" href="{{ records.url(page) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+       <li class="page-item{% if not records.nextPageUrl() %} disabled{% endif %}">
+    <a class="page-link" href="{{ records.nextPageUrl() }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+    </a>
+</li>
+    </ul>
+{% endif %}
+
+    
+
+
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="review-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        <svg width="22" height="22" viewbox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 1L1 21M1 1L21 21" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <div class="modal-title"> отправить заявку </div>
+      <div role="form">
+       
+        <form data-request="{{ reviewsModalForm }}::onFormSubmit">
+					
+					{{ form_token() }}
+
+					<div id="{{ reviewsModalForm }}_forms_flash"></div>
+
+          <p>
+            <label class="form-label">
+              <span class="form-label__title">Ваше имя</span>
+              <span class="wpcf7-form-control-wrap name_name">
+                <input type="text" name="Имя" size="40" class="form-label__input">
+              </span>
+            </label>
+            <label class="form-label">
+              <span class="form-label__title">Ваш e-mail</span>
+              <span class="wpcf7-form-control-wrap name_name">
+                <input type="text" name="email" size="40" class="form-label__input">
+              </span>
+            </label>
+            <label class="form-label">
+              <span class="form-label__title">Ваш отзыв</span>
+              <span class="wpcf7-form-control-wrap review">
+                <textarea name="Отзыв" cols="40" rows="3" class="form-label__input"></textarea>
+              </span>
+            </label>
+
+            <button type="submit" class="form-modal__btn">Отправить</button>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

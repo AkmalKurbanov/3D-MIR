@@ -1,0 +1,178 @@
+[records mainSlider]
+activeOnly = 1
+areaSlug = "uslugi"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = "project-detail"
+recordPageSlug = "{{ :slug }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="front-slider">
+  <div class="swiper-container gallery-top">
+    <div class="front-slider-bottom-container">
+      
+      <div class="front-slider-bottom">
+        <div class="slider-arrow-bottom">
+          <svg class="slider-arrow-bottom__svg" width="12" height="101" viewbox="0 0 12 101" fill="none" xmlns="http://www.w3.org/2000/svg" >
+            <path d="M5.46967 100.53C5.76256 100.823 6.23744 100.823 6.53033 100.53L11.3033 95.7574C11.5962 95.4645 11.5962 94.9896 11.3033 94.6967C11.0104 94.4038 10.5355 94.4038 10.2426 94.6967L6 98.9393L1.75736 94.6967C1.46447 94.4038 0.989593 94.4038 0.696699 94.6967C0.403806 94.9896 0.403806 95.4645 0.696699 95.7574L5.46967 100.53ZM5.25 0L5.25 100H6.75L6.75 0L5.25 0Z" fill="#EDEDED" ></path>
+          </svg>
+        </div>
+        <div class="front-slider-text">
+          <h1 class="front-slider__title">
+            Профессиональная 3D визуализация, 3D ролики и виртуальная
+            реальность.
+          </h1>
+          <ul class="front-slider__ul">
+            <li>Увеличение конверсии продаж</li>
+            <li>Презентация инвестиционных проектов</li>
+            <li>Интерактивные решения для бизнеса</li>
+          </ul>
+        </div>
+
+        <div class="front-slide-info">
+          <span class="front-slide-title"> </span>
+          
+          <a href="work/3d-vizualizatsiya/index.htm" class="front-slide-category" >
+            
+          </a>
+
+          <a href="naruchnye-chasy/index.htm" class="front-slide-link">
+            <svg class="front-slide-link__arrow" width="201" height="12" viewbox="0 0 201 12" fill="none" xmlns="http://www.w3.org/2000/svg" >
+              <path d="M200.53 6.53033C200.823 6.23744 200.823 5.76256 200.53 5.46967L195.757 0.696699C195.464 0.403806 194.99 0.403806 194.697 0.696699C194.404 0.989593 194.404 1.46447 194.697 1.75736L198.939 6L194.697 10.2426C194.404 10.5355 194.404 11.0104 194.697 11.3033C194.99 11.5962 195.464 11.5962 195.757 11.3033L200.53 6.53033ZM0 6.75L200 6.75V5.25L0 5.25L0 6.75Z" fill="#C59358" ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="swiper-wrapper" >
+
+      {% for record in mainSlider.items %}
+        {% if record.getAttributeValueBySlug('main_slider') %}
+          
+          <div class="swiper-slide" data-title="{{record.name}}" data-category="{{ record.category.name }}" data-href="{{ mainSlider.property("recordPage") ? mainSlider.property('recordPage')|page({(mainSlider.paramName('recordPageSlug')):(record.slug)}) }}" data-category-link="category/{{ record.category.slug }}">
+            
+            {% set imageUrl = record.preview_image.getPath %}
+            {% set imageExtension = imageUrl|split('.')|last %}
+              
+            {% if imageExtension == 'gif' %}
+              <img src="{{ imageUrl }}" alt="{{ categoryDetail.name }}">
+
+              {% elseif imageExtension == 'mp4' %}
+                <video autoplay="" loop="" preload="auto" muted="">
+                  <source src="{{imageUrl}}">
+                </video>   
+            {% else %}
+                {% set largeImageUrl = imageUrl|resize(1800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                {% set mediumImageUrl = imageUrl|resize(1250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                
+                {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1250w, ' ~ largeImageUrl ~ ' 1800w' %}
+                {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                {% set lazySrc = extraSmallImageUrl %}
+                
+                <img src="http://3d/storage/app/uploads/public/8a9/1ae/24f/thumb__500_0_0_0_crop.webp" 
+                     class="attachment- size- wp-post-image"
+                     srcset="{{lazySrcset}}" 
+                     sizes="{{lazySizes}}" 
+                     data-lazy-srcset="{{lazySrcset}}"
+                     data-lazy-sizes="{{lazySizes}}" 
+                     data-lazy-src="{{lazySrc}}" 
+                     alt="{{record.name}}">
+            {% endif %}    
+
+          
+            
+          </div>
+
+
+        
+
+          {% else %}
+        {% endif %}
+      {% endfor %}
+
+      
+      
+      
+    </div>
+  </div>
+
+
+  <div class="swipper-sidebar">
+    <button class="sidebar-modal" data-bs-toggle="modal" data-bs-target="#header-modal" >
+      отправить заявку
+    </button>
+    <div class="swipper-sidebar-btn">
+      <button class="swiper-sidebar-btn__container swiper-button-prev">
+        Назад
+      </button>
+      <button class="swiper-sidebar-btn__container swiper-button-next">
+        Вперед
+      </button>
+    </div>
+    <div class="swiper-container sidebar-slider" style="width:100%">
+      <div class="swiper-wrapper">
+
+        {% for record in mainSlider.items %}
+        {% if record.getAttributeValueBySlug('main_slider') %}
+          
+          <div class="swiper-slide" data-title="">
+        
+            {% set imageUrl = record.preview_image.getPath %}
+            {% set imageExtension = imageUrl|split('.')|last %}
+              
+            {% if imageExtension == 'gif' %}
+              <img src="{{ imageUrl }}" alt="{{ record.name }}">
+
+              {% elseif imageExtension == 'mp4' %}
+                <video autoplay="" loop="" preload="auto" muted="">
+                  <source src="{{imageUrl}}">
+                </video>   
+            {% else %}
+                {% set largeImageUrl = imageUrl|resize(300, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                {% set mediumImageUrl = imageUrl|resize(250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                {% set smallImageUrl = imageUrl|resize(200, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                {% set extraSmallImageUrl = imageUrl|resize(150, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                
+                {% set lazySrcset = extraSmallImageUrl ~ ' 150w, ' ~ smallImageUrl ~ ' 200w, ' ~ mediumImageUrl ~ ' 250w, ' ~ largeImageUrl ~ ' 300w' %}
+                {% set lazySizes = '(max-width: 400px) 100vw, (max-width: 800px) 50vw, (max-width: 1250px) 33vw, 25vw' %}
+                {% set lazySrc = extraSmallImageUrl %}
+                
+                <img src="{{ extraSmallImageUrl }}"
+                    class="attachment- size- wp-post-image"
+                    srcset="{{ lazySrcset }}"
+                    sizes="{{ lazySizes }}"
+                    data-lazy-srcset="{{ lazySrcset }}"
+                    data-lazy-sizes="{{ lazySizes }}"
+                    data-lazy-src="{{ lazySrc }}"
+                    alt="{{ record.name }}" style="width:100%">
+
+            {% endif %} 
+            
+          </div>
+
+
+        
+
+          {% else %}
+        {% endif %}
+      {% endfor %}
+
+      </div>
+    </div>
+    <a href="{{'projects.htm' | page}}" class="open-portfolio">
+      посмотреть портфолио
+    </a>
+    <div class="swiper-scrollbar sidebar-dots"></div>
+
+    <div class="sidebar-social">
+      {% partial 'site/social' %}
+    </div>
+
+  </div>
+</div>

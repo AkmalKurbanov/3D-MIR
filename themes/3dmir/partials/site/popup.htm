@@ -1,0 +1,70 @@
+<div class="modal fade" id="header-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        <svg width="22" height="22" viewbox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 1L1 21M1 1L21 21" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <div class="modal-title"> отправить заявку </div>
+      <div role="form">
+        
+        <form data-request="{{ modalForm }}::onFormSubmit">
+					
+					{{ form_token() }}
+
+					<div id="{{ modalForm }}_forms_flash"></div>
+
+          <p>
+            <label class="form-label">
+              <span class="form-label__title">Ваше имя</span>
+              <span class="wpcf7-form-control-wrap name_form">
+                <input type="text" name="Имя" size="40" class="form-label__input">
+              </span>
+            </label>
+
+            <label class="form-label">
+              <span class="form-label__title">Ваш телефон</span>
+              <span class="wpcf7-form-control-wrap tel">
+                <input type="tel" name="Телефон" size="40" class="form-label__input">
+              </span>
+            </label>
+            <label class="form-label">
+              <span class="form-label__title">Ваш e-mail</span>
+              <span class="wpcf7-form-control-wrap mail">
+                <input type="email" name="email" size="40" class="form-label__input">
+              </span>
+            </label>
+						<button type="submit" class="form-modal__btn">Отправить</button>
+					
+					{% if this.page.fileName == 'category.htm' %}
+							<input type="hidden" name="Услуги" value="{{categoryDetail.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{categoryDetail.slug}}">
+						
+						{% elseif this.page.fileName == 'project-detail.htm' %}
+							<input type="hidden" name="Проекты" value="{{recordDetail.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+
+						{% elseif this.page.fileName == 'service-detail.htm' %}
+							<input type="hidden" name="Услуги" value="{{recordDetail.name}}">
+							<input type="hidden" name="Категория" value="{{recordDetail.category.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+						
+						{% elseif this.page.fileName == 'price.htm' %}
+							<input type="hidden" name="Вопрос" value="Консультация по ценам">
+
+						{% elseif this.page.fileName == 'post.htm' %}
+							<input type="hidden" name="Блог" value="{{recordDetail.name}}">
+							<input type="hidden" name="Категория" value="{{recordDetail.category.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+						
+						
+
+						{% else %}
+					{% endif %}
+					
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

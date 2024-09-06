@@ -1,0 +1,113 @@
+<div class="block-services" data-ankor="">
+  <div class="block-services__container">
+
+    <div class="block-services__title">
+      <div class="block-services__title-text">
+        
+        {% if this.page.fileName == 'blog.htm' or this.page.fileName == 'post.htm' %}
+          РЕКОМЕНДУЕМ ПОЧИТАТЬ
+
+          {% elseif this.page.fileName == 'services.htm' or this.page.fileName == 'service-detail.htm' %}
+            УСЛУГИ
+        {% endif %}
+      
+      </div>
+      
+      <button class="block-services__title-btn collapsed" data-bs-toggle="collapse" href="#block-services__list" role="button">
+        <span>показать списком</span>
+        <svg class="block-services__title-img" width="14" height="14" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1L1 13M1 1L13 13" stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="collapse" id="block-services__list">
+      <div class="block-services__list">
+        
+        {% for record in records.items %}
+          {{record.name}}
+          {% if recordDetail.category.id == record.category.id %}
+            <a class="block-services__list-item" href="{{ records.property('recordPage') ? records.property('recordPage')|page({(records.paramName('recordPageSlug')):(record.slug)}) }}">{{record.name}}</a>
+          
+
+          {% else %}
+          {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+  
+
+    <div class="swiper-container cs_slider">
+      <!-- Additional required wrapper -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-wrapper">
+        
+        {% set counter = 1 %}
+        {% for record in records.items %}
+
+          {% if recordDetail.id == record.id %}
+          
+          {% elseif recordDetail.category.name == record.category.name %}
+            
+            {% if not category.hidden %}
+              <div class="swiper-slide cs-item">
+                <div class="cs-item__container">
+                  <div class="cs-item__inc">{{ counter }} {% set counter = counter + 1 %}</div>
+                  <a href="{{ records.property('recordPage') ? records.property('recordPage')|page({(records.paramName('recordPageSlug')):(record.slug)}) }}" class="cs-item__title">{{record.name}}</a>
+                  <a href="{{ records.property('recordPage') ? records.property('recordPage')|page({(records.paramName('recordPageSlug')):(record.slug)}) }}" class="cs-item__detail">
+                    <span class="cs-item__detail-link">подробнее</span>
+                    <svg class="cs-item__detail-image" width="151" height="12" viewbox="0 0 151 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M150.53 6.53033C150.823 6.23744 150.823 5.76256 150.53 5.46967L145.757 0.696699C145.464 0.403806 144.99 0.403806 144.697 0.696699C144.404 0.989593 144.404 1.46447 144.697 1.75736L148.939 6L144.697 10.2426C144.404 10.5355 144.404 11.0104 144.697 11.3033C144.99 11.5962 145.464 11.5962 145.757 11.3033L150.53 6.53033ZM0 6.75L150 6.75V5.25L0 5.25L0 6.75Z" fill="#C59358"></path>
+                    </svg>
+                  </a>
+                </div>
+                <a href="{{ records.property('recordPage') ? records.property('recordPage')|page({(records.paramName('recordPageSlug')):(record.slug)}) }}" class="cs-item__image">
+                  
+                  {% set imageUrl = record.preview_image.getPath %}
+                    {% set imageExtension = imageUrl|split('.')|last %}
+                    
+                    {% if imageExtension == 'gif' %}
+                        <img src="{{ imageUrl }}" alt="{{ record.name }}">
+
+                    {% elseif imageExtension == 'mp4' %}
+                        <video autoplay="" loop="" preload="auto" muted="">
+                            <source src="{{ imageUrl }}">
+                        </video>
+
+                    {% else %}
+                        {% set largeImageUrl = imageUrl|resize(1800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set mediumImageUrl = imageUrl|resize(1250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set extraSmallImageUrl = imageUrl|resize(400, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        
+                        {% set lazySrcset = extraSmallImageUrl ~ ' 400w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1250w, ' ~ largeImageUrl ~ ' 1800w' %}
+                        {% set lazySizes = '(max-width: 400px) 100vw, (max-width: 800px) 50vw, (max-width: 1250px) 33vw, 25vw' %}
+                        {% set lazySrc = extraSmallImageUrl %}
+                        
+                        <img src="{{ lazySrc }}"
+                            class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                            srcset="{{ lazySrcset }}"
+                            sizes="{{ lazySizes }}"
+                            data-lazy-srcset="{{ lazySrcset }}"
+                            data-lazy-sizes="{{ lazySizes }}"
+                            data-lazy-src="{{ lazySrc }}"
+                            alt="{{ record.name }}">
+                    {% endif %}
+                  
+                  
+                </a>
+              </div>
+            {% endif %}
+            
+          {% else %}
+          {% endif %}
+          
+
+        {% endfor %}
+
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</div>

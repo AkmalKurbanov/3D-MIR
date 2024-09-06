@@ -1,0 +1,127 @@
+title = "Contacts"
+url = "/contacts"
+layout = "default"
+meta_title = "Контакты и информация о Production studio"
+meta_description = "Контактная информация о Production studio 3D-MIR в Бишкеке - адрес, телефон, почта,  а также месемессенджеры для быстрой связи."
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/contacts"
+robot_index = "index"
+robot_follow = "follow"
+==
+<div class="page page-contacs">
+	<div class="breadcrumbs">
+		<span>
+			<span>
+				<a href="{{'home' | page}}">Главная</a> » <span class="breadcrumb_last" aria-current="page">Контакты</span>
+			</span>
+		</span>
+	</div>
+		<div class="row">
+			<div class="col-12 col-xl-5 contacts-left">
+				<h1 class="page-title">Контакты</h1>
+				<div class="contacts-container">
+					<div class="row">
+						<div class="col-12 col-sm-6 col-md-4 col-xl-6 contacts-block">
+							<div class="contacts-block__title">адрес</div>
+							<div class="contacts-block__desc">{{this.theme.address}}</div>
+						</div>
+						<div class="col-12 col-sm-6 col-md-4 col-xl-6 contacts-block">
+							<div class="contacts-block__title">Наш телефон</div>
+							<a class="contacts-block__desc" href="tel:{{this.theme.phone}}">{{this.theme.phone}}</a>
+						</div>
+						<div class="col-12 col-sm-6 col-md-4 col-xl-6 contacts-block">
+							<div class="contacts-block__title">Наш электронный адрес</div>
+							<a href="mailto:{{this.theme.email}}" class="contacts-block__desc">{{this.theme.email}}</a>
+						</div>
+						<div class="col-12 col-sm-6 col-md-4 col-xl-6 contacts-block">
+							<div class="contacts-block__title">часы работы</div>
+							<div class="contacts-block__desc">{{this.theme.worktime}}</div>
+						</div>
+						<div class="col-12 col-sm-6 col-md-4  col-xl-6 contacts-block">
+							<div class="contacts-block__title">мы в соцсетях</div>
+							<div class="contacts-block__desc">
+								<div class="footer-social__container">
+                  {% partial 'site/social' %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-xl-7">
+				<h2 class="page-contacs-h2">Свяжитесь с нами</h2>
+				<div class="white-form__container">
+					<div role="form" class="wpcf7" id="wpcf7-f3120-p44-o1" lang="ru-RU" dir="ltr">
+<div class="screen-reader-response"></div>
+<form action="telegram.php" method="POST" data-request="{{ genericForm }}::onFormSubmit">
+
+              {{ form_token() }}
+
+              <div id="{{ genericForm }}_forms_flash"></div>
+          
+            <div class="white-form form-contacts">
+              <label class="form-label">
+                <span class="form-label__title">Ваше имя</span>
+                <span class="wpcf7-form-control-wrap name_name">
+                  <input type="text" name="Имя" size="40" class="form-label__input">
+                </span>
+              </label>
+              <label class="form-label">
+                <span class="form-label__title">Ваш телефон</span>
+                <span class="wpcf7-form-control-wrap tel">
+                  <input type="tel" name="Телефон" size="40" class="form-label__input" >
+                </span>
+              </label>
+              <label class="form-label">
+                <span class="form-label__title">Ваш e-mail</span>
+                <input class="form-label__input" type="email" name="email">
+              </label>
+              <label class="form-label form-label__textarea">
+                <span class="form-label__title">Ваше сообщение</span>
+                <textarea class="form-label__input" name="сообщение" rows="1"></textarea>
+              </label>
+              
+              <button type="submit" class="white-form__btn">Отправить</button>
+            </div>
+
+            {% if this.page.fileName == 'category.htm' %}
+							<input type="hidden" name="Услуги" value="{{categoryDetail.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{categoryDetail.slug}}">
+						
+						{% elseif this.page.fileName == 'project-detail.htm' %}
+							<input type="hidden" name="Проекты" value="{{recordDetail.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+
+						{% elseif this.page.fileName == 'service-detail.htm' %}
+							<input type="hidden" name="Услуги" value="{{recordDetail.name}}">
+							<input type="hidden" name="Категория" value="{{recordDetail.category.name}}">
+							<input type="hidden" name="Ссылка" value="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+						
+						{% elseif this.page.fileName == 'price.htm' %}
+							<input type="hidden" name="Вопрос" value="Консультация по ценам">
+						
+						{% else %}
+					{% endif %}
+            
+          </form>
+</div>				</div>
+			</div>
+			<div class="col-12">
+				<div class="row">
+					<div class="col-12 col-xl-5 contacts-left">
+						<div class="contacts-map">
+							<div class="contacts-map__title">как добраться</div>
+							<div class="contacts-map__desc">
+                {{this.theme.routedescription}}
+              </div>
+						</div>
+					</div>
+					<div class="col-12 col-xl-7">
+						<script src="../services/constructor/1.0/js/index.htm?sid=ndyig6sXNS2cnsfpniOr-dc2d1lhrB35&amp;width=100%&amp;height=313&amp;lang=ru_RU&amp;sourceType=constructor&amp;scroll=true" async="" type="text/javascript" charset="utf-8"></script>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>

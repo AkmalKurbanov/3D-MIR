@@ -1,0 +1,308 @@
+title = "Category"
+url = "/category/:category"
+layout = "default"
+is_hidden = 0
+
+[categoryDetail]
+activeOnly = 1
+categorySlug = "{{ :category }}"
+recordPage = "record"
+recordPageSlug = "{{ :record }}"
+
+[records services]
+activeOnly = 1
+areaSlug = "services"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = "service-detail"
+recordPageSlug = "{{ :slug }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+
+[categories]
+activeOnly = 1
+categoriesPage = 0
+categoriesPageSlug = "{{ :category }}"
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+limit = 10
+
+[records similar]
+activeOnly = 1
+areaSlug = "portfolio"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = "project-detail"
+recordPageSlug = "{{ :slug }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="first-block">
+  <div class="first-block__img">
+    
+    {% if categoryDetail.preview_image %}
+      
+      {% set imageUrl = categoryDetail.preview_image.getPath %}
+      {% set imageExtension = imageUrl|split('.')|last %}
+
+      {% if imageExtension == 'gif' %}
+        <img src="{{ imageUrl }}" alt="{{ categoryDetail.name }}">
+
+      {% elseif imageExtension == 'mp4' %}
+        <video autoplay="" loop="" preload="auto" muted="">
+          <source src="{{imageUrl}}">
+        </video>    
+      {% else %}
+          {% set largeImageUrl = imageUrl|resize(1920, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          {% set mediumImageUrl = imageUrl|resize(1000, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          
+          {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1000w, ' ~ largeImageUrl ~ ' 1920w' %}
+          {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+          
+          <img src="{{ extraSmallImageUrl }}"
+              class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+              srcset="{{ lazySrcset }}"
+              sizes="{{ lazySizes }}"
+              data-lazy-srcset="{{ lazySrcset }}"
+              data-lazy-sizes="{{ lazySizes }}"
+              data-lazy-src="{{ lazySrc }}"
+              alt="{{ categoryDetail.name }}">
+    {% endif %}
+
+
+    {% endif %}
+
+    
+    
+    
+    <div class="slider-arrow-bottom">
+      <svg class="slider-arrow-bottom__svg" width="12" height="101" viewbox="0 0 12 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.46967 100.53C5.76256 100.823 6.23744 100.823 6.53033 100.53L11.3033 95.7574C11.5962 95.4645 11.5962 94.9896 11.3033 94.6967C11.0104 94.4038 10.5355 94.4038 10.2426 94.6967L6 98.9393L1.75736 94.6967C1.46447 94.4038 0.989593 94.4038 0.696699 94.6967C0.403806 94.9896 0.403806 95.4645 0.696699 95.7574L5.46967 100.53ZM5.25 0L5.25 100H6.75L6.75 0L5.25 0Z" fill="#EDEDED"></path>
+      </svg>
+    </div>
+  </div>
+  <div class="first-block__preview">
+    <div class="breadcrumbs">
+      <span>
+        <span>
+          <a href="{{'home'| page}}">Гланая</a> » <span>
+            <a href="{{'services'| page}}">Услуги</a> » <span class="breadcrumb_last" aria-current="page">{{ categoryDetail.name }}</span>
+          </span>
+        </span>
+      </span>
+    </div>
+    <h1 class="category-title">{{ categoryDetail.name }}</h1>
+    
+    <div class="category-first__desc">
+      <p>{{categoryDetail.description}}</p>
+    </div>
+    <button class="btn" data-bs-toggle="modal" data-bs-target="#header-modal"> Заказать проект </button>
+  </div>
+</div>
+
+
+
+<div class="block-services" data-ankor="">
+  <div class="block-services__container">
+
+    <div class="block-services__title">
+      <div class="block-services__title-text">УСЛУГИ</div>
+      
+      <button class="block-services__title-btn collapsed" data-bs-toggle="collapse" href="#block-services__list" role="button">
+        <span>показать списком</span>
+        <svg class="block-services__title-img" width="14" height="14" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1L1 13M1 1L13 13" stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="collapse" id="block-services__list">
+      <div class="block-services__list">
+        
+        {% for record in similar.items %}
+          
+          {% if categoryDetail.id == record.category.id %}
+            <a class="block-services__list-item" href="{{ similar.property('recordPage') ? similar.property('recordPage')|page({(similar.paramName('recordPageSlug')):(record.slug)}) }}">{{record.name}}{{categoryDetail.category.id }}</a>
+          
+
+          {% else %}
+          {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+  
+
+    <div class="swiper-container cs_slider">
+      <!-- Additional required wrapper -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-wrapper">
+        
+        {% set counter = 1 %}
+        {% for record in similar.items %}
+
+          {% if categoryDetail.id == record.category.id %}
+
+          
+            
+            {% if not category.hidden %}
+              <div class="swiper-slide cs-item">
+                <div class="cs-item__container">
+                  <div class="cs-item__inc">{{ counter }} {% set counter = counter + 1 %}</div>
+                  <a href="{{ similar.property('recordPage') ? similar.property('recordPage')|page({(similar.paramName('recordPageSlug')):(record.slug)}) }}" class="cs-item__title">{{record.name}}</a>
+                  <a href="{{ similar.property('recordPage') ? similar.property('recordPage')|page({(similar.paramName('recordPageSlug')):(record.slug)}) }}" class="cs-item__detail">
+                    <span class="cs-item__detail-link">подробнее</span>
+                    <svg class="cs-item__detail-image" width="151" height="12" viewbox="0 0 151 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M150.53 6.53033C150.823 6.23744 150.823 5.76256 150.53 5.46967L145.757 0.696699C145.464 0.403806 144.99 0.403806 144.697 0.696699C144.404 0.989593 144.404 1.46447 144.697 1.75736L148.939 6L144.697 10.2426C144.404 10.5355 144.404 11.0104 144.697 11.3033C144.99 11.5962 145.464 11.5962 145.757 11.3033L150.53 6.53033ZM0 6.75L150 6.75V5.25L0 5.25L0 6.75Z" fill="#C59358"></path>
+                    </svg>
+                  </a>
+                </div>
+                <a href="{{ similar.property('recordPage') ? similar.property('recordPage')|page({(similar.paramName('recordPageSlug')):(record.slug)}) }}" class="cs-item__image">
+                  
+                  {% set imageUrl = record.preview_image.getPath %}
+                    {% set imageExtension = imageUrl|split('.')|last %}
+                    
+                    {% if imageExtension == 'gif' %}
+                        <img src="{{ imageUrl }}" alt="{{ record.name }}">
+
+                    {% elseif imageExtension == 'mp4' %}
+                        <video autoplay="" loop="" preload="auto" muted="">
+                            <source src="{{ imageUrl }}">
+                        </video>
+
+                    {% else %}
+                        {% set largeImageUrl = imageUrl|resize(1800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set mediumImageUrl = imageUrl|resize(1250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set extraSmallImageUrl = imageUrl|resize(400, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        
+                        {% set lazySrcset = extraSmallImageUrl ~ ' 400w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1250w, ' ~ largeImageUrl ~ ' 1800w' %}
+                        {% set lazySizes = '(max-width: 400px) 100vw, (max-width: 800px) 50vw, (max-width: 1250px) 33vw, 25vw' %}
+                        {% set lazySrc = extraSmallImageUrl %}
+                        
+                        <img src="{{ lazySrc }}"
+                            class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                            srcset="{{ lazySrcset }}"
+                            sizes="{{ lazySizes }}"
+                            data-lazy-srcset="{{ lazySrcset }}"
+                            data-lazy-sizes="{{ lazySizes }}"
+                            data-lazy-src="{{ lazySrc }}"
+                            alt="{{ record.name }}">
+                    {% endif %}
+                  
+                  
+                </a>
+              </div>
+            {% endif %}
+            
+          {% else %}
+          {% endif %}
+          
+
+        {% endfor %}
+
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="content">
+      {{categoryDetail.content | raw}}
+
+      {% partial 'site/steps' %}
+
+  </div>
+  
+  {% if categoryDetail.repeater %}
+  <div class="need">
+        <div class="need-top">
+          <h3 class="need__title">НЕОБХОДИМАЯ ИНФОРМАЦИЯ ДЛЯ ВЫПОЛНЕНИЯ ПРОЕКТА</h3>
+          <div class="row">
+            
+            {% for item in categoryDetail.repeater %}
+              <div class="col-12 col-md-6">
+                <h4 class="need-col-title">{{item.repeater_value1}}</h4>
+                {{item.repeater_text | raw}}
+              </div>
+            {% endfor %}  
+
+        </div>
+        <div class="need-bottom">
+          * Мы с удовольствием выполним проект, даже если Вы располагаете не всей требуемой информацией, но стоимость проекта и сроки могут быть увеличены (обсуждается в каждом конкретном случае).
+        </div>
+      </div>
+   {% else %}   
+  {% endif %}
+ 
+  <div class="share-wrapper">
+    <div class="ya-share2" data-curtain="" data-direction="vertical" data-size="s" data-shape="round" data-color-scheme="whiteblack" data-services="vkontakte,facebook,twitter"></div>
+  </div>
+
+  <div class="additional-service" style="padding-top: 50px">
+    
+  <div class="additional-service__title">другие услуги</div>
+     
+ 
+  <div class="hp-services__container">
+
+    {% for category in categories.items %}
+
+      {% if category.id == categoryDetail.id %}
+        {% else %}
+        <a href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}" class="services-item">
+          <div class="services-item__img">
+              
+              {% set imageUrl = category.preview_image.getPath %}
+              {% set imageExtension = imageUrl|split('.')|last %}
+              
+              {% if imageExtension == 'gif' %}
+                  <img src="{{ imageUrl }}" alt="{{ category.name }}">
+
+              {% elseif imageExtension == 'mp4' %}
+                  <video autoplay="" loop="" preload="auto" muted="">
+                      <source src="{{ imageUrl }}">
+                  </video>
+
+              {% else %}
+                  {% set largeImageUrl = imageUrl|resize(1800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                  {% set mediumImageUrl = imageUrl|resize(1250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                  {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                  {% set extraSmallImageUrl = imageUrl|resize(400, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                  
+                  {% set lazySrcset = extraSmallImageUrl ~ ' 400w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1250w, ' ~ largeImageUrl ~ ' 1800w' %}
+                  {% set lazySizes = '(max-width: 400px) 100vw, (max-width: 800px) 50vw, (max-width: 1250px) 33vw, 25vw' %}
+                  {% set lazySrc = extraSmallImageUrl %}
+                  
+                  <img src="{{ lazySrc }}"
+                      class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                      srcset="{{ lazySrcset }}"
+                      sizes="{{ lazySizes }}"
+                      data-lazy-srcset="{{ lazySrcset }}"
+                      data-lazy-sizes="{{ lazySizes }}"
+                      data-lazy-src="{{ lazySrc }}"
+                      alt="{{ category.name }}">
+              {% endif %}
+        
+        </div>
+        <span class="services-item__desc"></span>
+        <div class="services-item__title">{{ category.name }}</div>
+        <span href="service/3d-vizualizatsiya/index.htm" class="services-item__btn">
+            подробнее
+        </span>
+      </a>
+      {% endif %}
+    {% endfor %}
+      
+  </div>
+</div>
+
+
+{% partial 'site/form-bottom' %}

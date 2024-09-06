@@ -1,0 +1,718 @@
+title = "Price"
+url = "/price"
+layout = "default"
+meta_title = "Прайс-лист - цены 3D визуализацию, моделирование и анимацию"
+meta_description = "Ознакомьтесь с ценой и сроками на услуги Production studio 3D-MIR в Бишкеке - прайс-лист на 3D-визуализацию, 3D-моделирование, 3D-анимацию и другие услуги."
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/price"
+robot_index = "index"
+robot_follow = "follow"
+
+[categories]
+activeOnly = 1
+areaSlug = "uslugi"
+activeRecordsOnly = 1
+categoriesPage = 0
+categoriesPageSlug = "{{ :category }}"
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+limit = 10
+
+[records services]
+activeOnly = 1
+areaSlug = "uslugi"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = "service-detail"
+recordPageSlug = "{{ :slug }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="page" style="padding-bottom: 0px;">
+  <div class="breadcrumbs">
+    <span>
+      <span>
+        <a href="{{'home' | page}}">Главная</a> » <span class="breadcrumb_last" aria-current="page">Цены</span>
+      </span>
+    </span>
+  </div>
+  <h1 class="page-title">Цены</h1>
+  <div class="content">
+  
+    {% for category in categories.items %}
+      <h2 class="h2" style="margin-top: 60px; text-transform: none;">{{category.name}}</h2>
+      <table class="tables" style="width: 100%;">
+        <tbody>
+          <tr>
+            <td style="text-align: justify;">Тип объекта</td>
+            <td style="text-align: justify;">Сроки</td>
+            <td style="text-align: justify;">Стоимость</td>
+          </tr>
+
+          
+
+            {% if category.records|length %}
+            
+              {% for record in category.records %}
+
+                {% if record.deadline and record.price %}
+                  <tr class="grey2">
+                    <td style="text-align: justify;">
+                      <a href="{{ services.property('recordPage') ? services.property('recordPage')|page({(services.paramName('recordPageSlug')):(record.slug)}) }}">{{record.name}}</a>
+                    </td>
+                    <td style="text-align: justify;">{{record.deadline}}</td>
+                    <td style="text-align: justify;">{{record.price}}</td>
+                  </tr>
+                  {% else %}
+                {% endif %}
+              {% endfor %}
+            
+            {% endif %}
+
+            
+        
+          
+          
+        </tbody>
+      </table>
+      {% endfor %}
+    
+  </div>
+  <div class="page-price-bottom">
+    <h2 class="page-price-bottom__title">остались вопросы? получите бесплатную консультацию</h2>
+    <button class="btn" data-bs-toggle="modal" data-bs-target="#header-modal">получить консультацию</button>
+    <div class="note">
+      <div class="note__title">ПРИМЕЧАНИЕ:</div>
+      <ul style="margin-bottom: 40px;">
+        <li>Внесение изменений в проект, свыше 10% от общего объема работ, оплачивается дополнительно в размере до 50% от стоимости проекта.</li>
+        <li>Сроки работ обговариваются индивидуально, после ознакомления с техническим заданием</li>
+      </ul>
+      <div class="note__title">ПОРЯДОК ОПЛАТЫ:</div>
+      <ul>
+        <li>Предоплата составляет 30-50% от стоимости заказа. Производится после утверждения технического задания и сроков выполнения проекта.</li>
+        <li>Финальная оплата производится на момент подписания акта приемки-передачи.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{# <style>
+  .price-calc {
+    font-family: Open Sans;
+    background-color: #131313;
+    padding: 75px 0 70px;
+  }
+
+  .pc-cont {
+    max-width: 1210px;
+    padding: 0 15px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pc__title {
+    margin: 0 0 60px;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 48px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+
+  .pc-tabs {
+    border: 1px solid #383838;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: 40px;
+  }
+
+  .pc-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+
+  .pc__comment {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    color: #757575;
+    max-width: unset;
+    width: 100%;
+    text-align: left;
+    margin: 15px 0 0;
+  }
+
+  .price-calc .nav-link {
+    padding: 15px 40px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #757575;
+  }
+
+  .price-calc .nav-link.active {
+    border-radius: 0;
+    border-color: #C59358;
+    background: #C59358;
+    color: #FFFFFF;
+  }
+
+  .pc_tab {
+    margin-bottom: 60px;
+  }
+
+  .pc-col-title {
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 46px;
+    color: #FFFFFF;
+  }
+
+  .pc_tab label {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    color: #757575;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .pc_tab .radio {
+    position: relative;
+  }
+
+  .pc_tab .radio input:checked+label {
+    color: #C59358;
+  }
+
+  .pc_tab .radio .custom-radio+label:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid #383838;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    margin-right: 10px;
+  }
+
+  .pc_tab .radio .custom-radio {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .pc_tab .radio .custom-radio:checked+label::before {
+    border: 1px solid #C59358;
+  }
+
+  .pc_tab .radio .custom-radio:checked+label::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background-color: #C59358;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    margin-right: 10px;
+    position: absolute;
+    border-radius: 50%;
+    left: 5px;
+  }
+
+  .pc-area {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pc-area-title {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    color: #757575;
+  }
+
+  .pc-area input {
+    margin-left: 35px;
+    padding: 5px;
+    border: 1px solid #C59358;
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 46px;
+    color: #FFFFFF;
+    background-color: transparent;
+    width: 110px;
+  }
+
+  .pc-tab-cont {
+    margin-bottom: 60px;
+  }
+
+  .pc-footer {
+    padding-top: 40px;
+    border-top: 1px solid #383838;
+    display: flex;
+    align-items: center;
+  }
+
+  .itog-container {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 46px;
+    color: #FFFFFF;
+    margin-right: 55px;
+  }
+
+  .itog-price {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 48px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin-right: 85px;
+    white-space: nowrap;
+  }
+
+  .pc-footer .btn {
+    color: white;
+  }
+
+  .pc-footer-bottom {
+    margin-top: 20px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    color: #757575;
+  }
+
+  .dropdown-price {
+    display: none;
+    position: relative;
+    width: 100%;
+    max-width: 330px;
+  }
+
+  @media (max-width: 1202px) {
+    .pc-header {
+      display: block;
+    }
+
+    .pc-tabs {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .pc-header {
+      margin-bottom: 40px;
+    }
+
+    .dropdown-price {
+      display: block;
+    }
+
+    .dropdown-price .dropdown-toggle {
+      background: #C59358;
+      color: white;
+      width: 100%;
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    .dropdown-price .dropdown-toggle:focus,
+    .dropdown-price .dropdown-toggle:hover {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .dropdown-price .dropdown-menu {
+      width: 100%;
+    }
+
+    .dropdown-price .dropdown-item {
+      font-size: 20px;
+    }
+
+    .pc-tabs {
+      display: none;
+    }
+
+    .pc-tab-cont {
+      margin-bottom: 40px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .pc-tabs {
+      flex-wrap: wrap;
+    }
+
+    .pc__title {
+      text-align: center;
+    }
+
+    .pc-col-title {
+      font-size: 20px;
+      line-height: 46px;
+    }
+
+    .pc_tab {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .pc-col {
+      margin-bottom: 40px;
+    }
+
+    .pc_tab {
+      margin-bottom: 0;
+    }
+
+    .pc-tab-cont {
+      margin-bottom: 0;
+    }
+
+    .dropdown-price {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 750px) {
+    .pc__title {
+      font-size: 24px;
+      line-height: 48px;
+      margin-bottom: 30px;
+    }
+
+    .pc-tabs {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .nav-link {
+      width: 100%;
+    }
+
+    .pc-footer {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .pc-footer .btn {
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .itog-container {
+      margin-right: 0;
+    }
+
+    .itog-price {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 568px) {
+    .pc-area {
+      justify-content: space-between;
+    }
+  }
+</style>
+<div class="price-calc" style="margin-bottom: 100px;">
+  <div class="pc-cont">
+    <h2 class="pc__title">КАЛЬКУЛЯТОР</h2>
+    <div class="pc-header">
+      <div class="dropdown dropdown-price" id="dropdown-price-toggle">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown-price" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> VR/AR </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownPrice">
+          <button class="dropdown-item" data-bs-target="#VR">VR/AR</button>
+          <button class="dropdown-item" data-bs-target="#VIS">Визуализация</button>
+          <button class="dropdown-item" data-bs-target="#VIRT">Виртуальный тур</button>
+          <button class="dropdown-item" data-bs-target="#THRID">3D-План</button>
+          <button class="dropdown-item" data-bs-target="#ANIM">Анимация</button>
+        </div>
+      </div>
+      <ul class="nav nav-tabs pc-tabs" id="price-calc" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#VR" type="button" role="tab" aria-controls="home" aria-selected="true">VR/AR</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#VIS" type="button" role="tab" aria-controls="contact" aria-selected="false">Визуализация</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#VIRT" type="button" role="tab" aria-controls="contact" aria-selected="false">Виртуальный тур</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#THRID" type="button" role="tab" aria-controls="contact" aria-selected="false">3D-План</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#ANIM" type="button" role="tab" aria-controls="contact" aria-selected="false">Анимация</button>
+        </li>
+      </ul>
+      <div class="pc__comment"> Скидки на заказы более одного объекта или услуги </div>
+    </div>
+    <div class="pc-tab-cont tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="VR" role="tabpanel">
+        <form class="row pc_tab">
+          <input type="hidden" name="type_job_label" value="VR/AR">
+          <input type="hidden" name="type_job" value="VR">
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">1. Что считаем?</div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VR_interior" name="VR_type" value="Интерьер" checked="">
+              <label for="VR_interior">Интерьер</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VR_2" name="VR_type" value="Экстерьер">
+              <label for="VR_2">Экстерьер</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VR_3" name="VR_type" value="Экстерьер и интерьер коттеджа">
+              <label for="VR_3">Экстерьер и интерьер коттеджа</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VR_4" name="VR_type" value="Экстерьер многоэтажного дома">
+              <label for="VR_4">Экстерьер многоэтажного дома</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">2. Что у вас есть?</div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VR_8" name="VR_cad" checked="">
+              <label for="VR_8">CAD-файлы</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VR_9" name="VR_model" checked="">
+              <label for="VR_9">3D-модель (Revit, Archicad, SketchUp, 3D Max и пр.)</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VR_10" name="VR_design" checked="">
+              <label for="VR_10">Дизайн-проект</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">3. Укажите параметры</div>
+            <div class="pc-area">
+              <div class="pc-area-title">Общая площадь (м2)</div>
+              <input type="number" min="1" name="VR_area" value="50">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="VIS" role="tabpanel">
+        <form class="row pc_tab">
+          <input type="hidden" name="type_job_label" value="Визуализация">
+          <input type="hidden" name="type_job" value="VIS">
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">1. Что считаем?</div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VIS_1" name="VIS_type" value="Интерьер" checked="">
+              <label for="VIS_1">Интерьер</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VIS_2" name="VIS_type" value="Экстерьер коттеджа">
+              <label for="VIS_2">Экстерьер коттеджа</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VIS_5" name="VIS_type" value="Экстерьер многоэтажного дома">
+              <label for="VIS_5">Экстерьер многоэтажного дома</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="VIS_6" name="VIS_type" value="С высоты птичьего полета">
+              <label for="VIS_6">С высоты птичьего полета</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">2. Что у вас есть?</div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VIS_8" name="VIS_cad" checked="">
+              <label for="VIS_8">CAD-файлы</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VIS_9" name="VIS_model" checked="">
+              <label for="VIS_9">3D-модель (Revit, Archicad, SketchUp, 3D Max и пр.)</label>
+            </div>
+            <div class="radio" id="calc_have_design">
+              <input class="custom-radio" type="checkbox" id="VIS_10" name="VIS_design" checked="">
+              <label for="VIS_10">Дизайн-проект</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">3. Укажите параметры</div>
+            <div class="pc-area">
+              <div class="pc-area-title">Общая площадь (м2)</div>
+              <input type="number" min="1" name="VIS_area" value="50">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="VIRT" role="tabpanel">
+        <form class="row pc_tab">
+          <input type="hidden" name="type_job_label" value="Виртуальный тур">
+          <input type="hidden" name="type_job" value="VIRT">
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">1. Что считаем?</div>
+            <div class="radio" id="calc_type_interior" style="">
+              <input class="custom-radio" type="radio" id="VIRT_1" name="VIRT_type" value="Интерьер" checked="">
+              <label for="VIRT_1">Интерьер</label>
+            </div>
+            <div class="radio" id="calc_type_aerial">
+              <input class="custom-radio" type="radio" id="VIRT_6" name="VIRT_type" value="С высоты птичьего полета">
+              <label for="VIRT_6">С высоты птичьего полета</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">2. Что у вас есть?</div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VIRT_8" name="VIRT_cad" checked="">
+              <label for="VIRT_8">CAD-файлы</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="VIRT_9" name="VIRT_model" checked="">
+              <label for="VIRT_9">3D-модель (Revit, Archicad, SketchUp, 3D Max и пр.)</label>
+            </div>
+            <div class="radio" id="calc_have_design">
+              <input class="custom-radio" type="checkbox" id="VIRT_10" name="VIRT_design" checked="">
+              <label for="VIRT_10">Дизайн-проект</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">3. Укажите параметры</div>
+            <div class="pc-area">
+              <div class="pc-area-title">количество панорамных точек</div>
+              <input type="panoram" name="VIRT_panoram" value="11">
+            </div>
+            <div class="pc-area">
+              <div class="pc-area-title">Общая площадь (м2)</div>
+              <input type="number" min="1" name="VIRT_area" value="50">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="THRID" role="tabpanel">
+        <form class="row pc_tab">
+          <input type="hidden" name="type_job_label" value="3D-план">
+          <input type="hidden" name="type_job" value="THRID">
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">1. Что считаем?</div>
+            <div class="radio" id="calc_type_interior" style="">
+              <input class="custom-radio" type="radio" id="THRID_1" name="THRID_type" value="Интерьер" checked="">
+              <label for="THRID_1">Интерьер</label>
+            </div>
+            <div class="radio" id="calc_type_int_land" style="">
+              <input class="custom-radio" type="radio" id="THRID_3" name="THRID_type" value="Интерьер с ландшафтом">
+              <label for="THRID_3">Интерьер с ландшафтом</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">2. Что у вас есть?</div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="THRID_8" name="THRID_cad" checked="">
+              <label for="THRID_8">CAD-файлы</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="THRID_9" name="THRID_model" checked="">
+              <label for="THRID_9">3D-модель (Revit, Archicad, SketchUp, 3D Max и пр.)</label>
+            </div>
+            <div class="radio" id="calc_have_design">
+              <input class="custom-radio" type="checkbox" id="THRID_10" name="THRID_design" checked="">
+              <label for="THRID_10">Дизайн-проект</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">3. Укажите параметры</div>
+            <div class="pc-area">
+              <div class="pc-area-title">Общая площадь (м2)</div>
+              <input type="number" min="1" name="THRID_area" value="50">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="ANIM" role="tabpanel">
+        <form class="row pc_tab">
+          <input type="hidden" name="type_job_label" value="Анимация">
+          <input type="hidden" name="type_job" value="ANIM">
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">1. Что считаем?</div>
+            <div class="radio">
+              <input class="custom-radio" type="radio" id="ANIM_1" name="ANIM_type" value="Архитектурная анимация" checked="">
+              <label for="ANIM_1">Архитектурная анимация</label>
+            </div>
+            <div class="radio" id="calc_type_int_land" style="">
+              <input class="custom-radio" type="radio" id="ANIM_3" name="ANIM_type" value="Анимация предметов">
+              <label for="ANIM_3">Анимация предметов</label>
+            </div>
+            <div class="radio" id="calc_type_int_land" style="">
+              <input class="custom-radio" type="radio" id="ANIM_4" name="ANIM_type" value="Анимационная реклама">
+              <label for="ANIM_4">Анимационная реклама</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">2. Что у вас есть?</div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="ANIM_8" name="ANIM_script" checked="">
+              <label for="ANIM_8">Сценарий</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="ANIM_9" name="ANIM_cad" checked="">
+              <label for="ANIM_9">CAD</label>
+            </div>
+            <div class="radio">
+              <input class="custom-radio" type="checkbox" id="ANIM_10" name="ANIM_model" checked="">
+              <label for="ANIM_10">3D-модель</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 pc-col">
+            <div class="pc-col-title">3. Укажите параметры</div>
+            <div class="pc-area">
+              <div class="pc-area-title">Хронометраж</div>
+              <input type="number" min="1" name="ANIM_area" value="20">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="pc-footer">
+      <div class="itog-container"> Итого </div>
+      <div class="itog-price" style="display: flex; align-items: center;">
+        <span id="itog-price">200 000</span>&nbsp; <svg width="42" height="48" viewbox="0 0 41 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.15 27V23.255H0.35V19.86H3.15V17.13H0.35V12.79H3.15V2.01H11.13C14.35 2.01 16.695 2.66333 18.165 3.97C19.6583 5.27666 20.405 7.07333 20.405 9.36C20.405 10.7133 20.1017 11.985 19.495 13.175C18.8883 14.365 17.8733 15.3217 16.45 16.045C15.05 16.7683 13.1367 17.13 10.71 17.13H8.435V19.86H13.825V23.255H8.435V27H3.15ZM10.185 12.79C11.6783 12.79 12.8567 12.5333 13.72 12.02C14.6067 11.5067 15.05 10.6783 15.05 9.535C15.05 7.41167 13.65 6.35 10.85 6.35H8.435V12.79H10.185ZM34.4941 0.408203L33.7935 6.69727L40.168 4.91992L40.7319 9.22656L34.9214 9.63672L38.7324 14.7124L34.853 16.7803L32.187 11.4312L29.8457 16.7461L25.8125 14.7124L29.5894 9.63672L23.813 9.19238L24.4795 4.91992L30.7173 6.69727L30.0166 0.408203H34.4941Z" fill="white"></path>
+        </svg>
+      </div>
+      <button class="btn" data-bs-toggle="modal" data-bs-target="#price-modal">получить консультацию</button>
+    </div>
+    <div class="pc-footer-bottom"> *Расчет стоимости приблизительный, окончательная стоимость зависит от исходных данных проекта </div>
+  </div>
+</div> #}

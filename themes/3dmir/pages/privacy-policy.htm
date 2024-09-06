@@ -1,0 +1,28 @@
+title = "Privacy Policy"
+url = "/privacy-policy"
+layout = "default"
+meta_title = "Политика конфиденциальности"
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/privacy-policy"
+robot_index = "index"
+robot_follow = "follow"
+==
+<div class="page">
+    <div class="breadcrumbs">
+        <span
+            ><span
+                ><a href="{{'home'| page}}">Главная</a> »
+                <span class="breadcrumb_last" aria-current="page"
+                    >{{this.page.title}}</span
+                ></span
+            ></span
+        >
+    </div>
+    <h1 class="page-title">Политика конфиденциальности</h1>
+
+    <div class="content">{{this.theme.privacyPolicy |raw}}</div>
+
+    {% partial 'site/consultation' %}
+
+</div>

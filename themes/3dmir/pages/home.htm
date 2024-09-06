@@ -1,0 +1,52 @@
+title = "Demonstration"
+url = "/"
+layout = "default"
+meta_title = "Студия архитектурной 3D визуализации и анимации"
+meta_description = "Наша студия разрабатывает: архитектурную 3D визуализацию и виузализацию интерьеров, мебели, объектов, а также архитектурную 3D анимацию и моделирование"
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/"
+robot_index = "index"
+robot_follow = "follow"
+==
+{% partial 'site/mainslider' %}
+
+<div class="hp-about" data-ankor="">
+      <div class="max-width">
+        <div class="hp-about__title">{{this.theme.sitename}}</div>
+        <div class="hp-about__desc">
+         {{this.theme.about | raw}}
+        </div>
+        <div class="hp-about__advantages">
+          <div class="row">
+            
+						<div class="col-6 col-md-3 advantage-item">
+              <img class="advantage-item__img" src="{{ 'assets/images/icon-earth.svg'|theme }}" alt="" width="50" height="50" data-lazy-src="" />
+              <span class="advantage-item__title">Работаем удаленно по всему миру</span>
+            </div>
+
+						<div class="col-6 col-md-3 advantage-item">
+              <img class="advantage-item__img" src="{{ 'assets/images/icon-winner.svg'|theme }}" alt="" width="50" height="50" data-lazy-src="" />
+              <span class="advantage-item__title">индивидуальный подход к каждому проекту</span>
+            </div>
+
+						<div class="col-6 col-md-3 advantage-item">
+              <img class="advantage-item__img" src="{{ 'assets/images/icon-timing.svg'|theme }}" alt="" width="50" height="50" data-lazy-src="" />
+              <span class="advantage-item__title">Всегда соблюдаем оговоренные сроки</span>
+            </div>
+
+						<div class="col-6 col-md-3 advantage-item">
+              <img class="advantage-item__img" src="{{ 'assets/images/icon-pay.svg'|theme }}" alt="" width="50" height="50" data-lazy-src="" />
+              <span class="advantage-item__title">Предлагаем поэтапную оплату работ</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% partial 'site/services' %}
+{% partial 'site/partners' %}
+{% partial 'site/reviews' %}
+{% partial 'site/form-bottom' %}

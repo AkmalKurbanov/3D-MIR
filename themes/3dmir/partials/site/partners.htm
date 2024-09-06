@@ -1,0 +1,40 @@
+[records partners]
+activeOnly = 1
+areaSlug = "partnery"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = 0
+recordPageSlug = "{{ :record }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+==
+<div class="partners">
+      <div class="partners__title">Наши клиенты</div>
+      <div class="swiper-container partners-slider">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+
+            
+
+          {% for record in partners.items %}
+
+            {% if record.preview_image %}
+              <div class="swiper-slide">
+                <img loading="lazy" src="{{ record.preview_image.getPath }}"/>
+              </div>
+            {% endif %}    
+          
+          {% endfor %}
+
+         
+
+
+          
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination partners-slider__dots"></div>
+      </div>
+    </div>

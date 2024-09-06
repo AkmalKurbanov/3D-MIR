@@ -1,0 +1,314 @@
+title = "Services"
+url = "/services"
+layout = "default"
+meta_title = "Услуги студии - ознакомиться и узнать цену Production studio"
+meta_description = "Услуги Production studio 3D-MIR в Бишкеке - 3D визуализация, 3D моделирование, 3D анимация, 3D тур. Доступные цены на все услуги."
+is_hidden = 0
+seo_keywords = "Keywords"
+canonical_url = "http://3dmir/services"
+robot_index = "index"
+robot_follow = "follow"
+
+[records services]
+activeOnly = 1
+areaSlug = "uslugi"
+categorySlug = "{{ :category }}"
+tagSlug = "{{ :tag }}"
+recordPage = "service-detail"
+recordPageSlug = "{{ :slug }}"
+limit = 10
+pageSlug = "{{ :page }}"
+orderBy = "name"
+orderByDirection = "ASC"
+
+[categories]
+activeOnly = 1
+areaSlug = "uslugi"
+categoriesPage = 0
+categoriesPageSlug = "{{ :category }}"
+categoryPage = "category"
+categoryPageSlug = "{{ :category }}"
+limit = 10
+==
+<div class="services-page">
+		
+  <div class="first-block">
+    <div class="first-block__img">
+      
+      {% set imageUrl = 'assets/images/services_bg.jpg'|theme %}
+      {% set imageExtension = imageUrl|split('.')|last %}
+
+      {% if imageExtension == 'gif' %}
+          <img src="{{ imageUrl }}" alt="{{ recordDetail.name }}" style="width:100%">
+      {% elseif imageExtension == 'mp4' %}
+          <video autoplay loop preload="auto" muted>
+              <source src="{{ imageUrl }}">
+          </video>    
+      {% else %}
+          {% set largeImageUrl = imageUrl|resize(1920, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          {% set mediumImageUrl = imageUrl|resize(1000, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          {% set extraSmallImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+          
+          {% set lazySrcset = extraSmallImageUrl ~ ' 500w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1000w, ' ~ largeImageUrl ~ ' 1920w' %}
+          {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+          
+          <img src="{{ extraSmallImageUrl }}"
+              class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+              srcset="{{ lazySrcset }}"
+              sizes="{{ lazySizes }}"
+              alt="{{ recordDetail.name }}">
+      {% endif %}
+
+      <div class="slider-arrow-bottom">
+        <svg class="slider-arrow-bottom__svg" width="12" height="101" viewbox="0 0 12 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.46967 100.53C5.76256 100.823 6.23744 100.823 6.53033 100.53L11.3033 95.7574C11.5962 95.4645 11.5962 94.9896 11.3033 94.6967C11.0104 94.4038 10.5355 94.4038 10.2426 94.6967L6 98.9393L1.75736 94.6967C1.46447 94.4038 0.989593 94.4038 0.696699 94.6967C0.403806 94.9896 0.403806 95.4645 0.696699 95.7574L5.46967 100.53ZM5.25 0L5.25 100H6.75L6.75 0L5.25 0Z" fill="#EDEDED"></path>
+        </svg>
+      </div>
+
+    </div>
+    <div class="first-block__preview">
+      <div class="breadcrumbs">
+        <span>
+          <span>
+            <a href="{{'blog'| page}}">Главная</a> <span>
+              » <span class="breadcrumb_last" aria-current="page">Услуги</span>
+            </span>
+          </span>
+        </span>
+      </div>
+      <h1 class="category-title">Услуги</h1>
+      
+      <div class="category-first__desc">
+        <p>
+          Продакшн студия “3D-MIR” предоставляет ряд услуг, связанных с 3D-графикой. Более детально с каждой услугой, Вы можете ознакомиться, если перейдете по ссылкам интересующего раздела. Также мы всегда рады ответить на все Ваши вопросы по телефону
+        <br>
+        <a href="tel:{{this.theme.phone}}">{{this.theme.phone}}</a>
+        </p>
+      </div>
+      <button class="btn" data-bs-toggle="modal" data-bs-target="#header-modal"> Заказать проект </button>
+    </div>
+  </div>
+
+  
+
+	
+
+<div class="block-services" data-ankor="">
+  <div class="block-services__container">
+
+    <div class="block-services__title">
+      <div class="block-services__title-text">
+        
+        Услуги
+      
+      </div>
+      
+      <button class="block-services__title-btn collapsed" data-bs-toggle="collapse" href="#block-services__list" role="button">
+        <span>показать списком</span>
+        <svg class="block-services__title-img" width="14" height="14" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1L1 13M1 1L13 13" stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="collapse" id="block-services__list">
+      <div class="block-services__list">
+        
+        	{% for category in categories.items %}
+            <a class="block-services__list-item" href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}">{{category.name }}</a>
+            
+          {% endfor %}
+       
+      </div>
+    </div>
+  
+
+    <div class="swiper-container cs_slider">
+      <!-- Additional required wrapper -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-wrapper">
+
+
+        {% set counter = 1 %}
+
+        {% for category in categories.items %}
+          {% if not category.hidden %}
+            <div class="swiper-slide cs-item">
+                <div class="cs-item__container">
+                  <div class="cs-item__inc">{{ counter }}{% set counter = counter + 1 %}</div>
+                  <a href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}" class="cs-item__title">{{category.name}}</a>
+                  <a href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}" class="cs-item__detail">
+                    <span class="cs-item__detail-link">подробнее</span>
+                    <svg class="cs-item__detail-image" width="151" height="12" viewbox="0 0 151 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M150.53 6.53033C150.823 6.23744 150.823 5.76256 150.53 5.46967L145.757 0.696699C145.464 0.403806 144.99 0.403806 144.697 0.696699C144.404 0.989593 144.404 1.46447 144.697 1.75736L148.939 6L144.697 10.2426C144.404 10.5355 144.404 11.0104 144.697 11.3033C144.99 11.5962 145.464 11.5962 145.757 11.3033L150.53 6.53033ZM0 6.75L150 6.75V5.25L0 5.25L0 6.75Z" fill="#C59358"></path>
+                    </svg>
+                  </a>
+                </div>
+                <a href="{{ categories.property('categoryPage') ? categories.property('categoryPage')|page({(categories.paramName('categoriesPageSlug')):(category.slug)}) }}" class="cs-item__image">
+                  
+                  
+
+                    {% set imageUrl = category.preview_image.getPath %}
+                    {% set imageExtension = imageUrl|split('.')|last %}
+
+                    {% if imageExtension == 'gif' %}
+                        <img src="{{ imageUrl }}" alt="{{ record.name }}">
+                      
+                      {% elseif imageExtension == 'mp4' %}
+                        <video autoplay="" loop="" preload="auto" muted="">
+                            <source src="{{ imageUrl }}">
+                        </video>
+
+                    {% else %}
+                        {% set largeImageUrl = imageUrl|resize(500, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set mediumImageUrl = imageUrl|resize(400, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set smallImageUrl = imageUrl|resize(300, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        {% set extraSmallImageUrl = imageUrl|resize(300, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                        
+                        {% set lazySrcset = extraSmallImageUrl ~ ' 300w, ' ~ smallImageUrl ~ ' 430w, ' ~ mediumImageUrl ~ ' 500w, ' ~ largeImageUrl ~ ' 550w' %}
+                        {% set lazySizes = '(max-width: 576px) 100vw, (min-width: 577px) and (max-width: 768px) 100vw, (min-width: 769px) and (max-width: 992px) 100vw, (min-width: 993px) and (max-width: 1200px) 100vw, (min-width: 1201px) 100vw' %}
+                        {% set lazySrc = extraSmallImageUrl %}
+                        
+                        <img src="{{ lazySrc }}"
+                            class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                            srcset="{{ lazySrcset }}"
+                            sizes="{{ lazySizes }}"
+                            data-lazy-srcset="{{ lazySrcset }}"
+                            data-lazy-sizes="{{ lazySizes }}"
+                            data-lazy-src="{{ lazySrc }}"
+                            alt="{{ record.name }}">
+                    {% endif %}
+
+                  
+                </a>
+              </div>
+            {% endif %}
+        {% endfor %}
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+  
+		<div class="category">
+  
+
+
+  {% for category in categories.items %}
+    <div class="content">
+      
+      <h2>{{category.name}}</h2>
+      <p>{{category.description}}</p>
+    
+    </div>
+    
+    <div class="additional-service">
+      <div class="hp-services__container">
+        
+        {% if category.records|length %}
+          
+          {% for record in category.records %}
+            
+            <a href="{{ services.property('recordPage') ? services.property('recordPage')|page({(services.paramName('recordPageSlug')):(record.slug)}) }}" class="services-item">
+              
+              <div class="services-item__img">
+                {% set imageUrl = record.preview_image.getPath %}
+                {% set imageExtension = imageUrl|split('.')|last %}
+                
+                {% if imageExtension == 'gif' %}
+                    <img src="{{ imageUrl }}" alt="{{ record.name }}">
+
+                {% elseif imageExtension == 'mp4' %}
+                    <video autoplay="" loop="" preload="auto" muted="">
+                        <source src="{{ imageUrl }}">
+                    </video>
+
+                {% else %}
+                    {% set largeImageUrl = imageUrl|resize(1800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                    {% set mediumImageUrl = imageUrl|resize(1250, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                    {% set smallImageUrl = imageUrl|resize(800, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                    {% set extraSmallImageUrl = imageUrl|resize(400, auto, { mode: 'crop', quality: '80', extension: 'webp' }) %}
+                    
+                    {% set lazySrcset = extraSmallImageUrl ~ ' 400w, ' ~ smallImageUrl ~ ' 800w, ' ~ mediumImageUrl ~ ' 1250w, ' ~ largeImageUrl ~ ' 1800w' %}
+                    {% set lazySizes = '(max-width: 400px) 100vw, (max-width: 800px) 50vw, (max-width: 1250px) 33vw, 25vw' %}
+                    {% set lazySrc = extraSmallImageUrl %}
+                    
+                    <img src="{{ lazySrc }}"
+                        class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                        srcset="{{ lazySrcset }}"
+                        sizes="{{ lazySizes }}"
+                        data-lazy-srcset="{{ lazySrcset }}"
+                        data-lazy-sizes="{{ lazySizes }}"
+                        data-lazy-src="{{ lazySrc }}"
+                        alt="{{ record.name }}">
+                {% endif %} 
+              </div>
+              
+              <div class="services-item__desc"></div>
+              <div class="services-item__title"> {{record.name}}</div>
+              <span href="{{ services.property('recordPage') ? services.property('recordPage')|page({(services.paramName('recordPageSlug')):(record.slug)}) }}" class="services-item__btn"> подробнее </span>
+            </a>
+
+          {% endfor %}
+          
+        {% endif %}
+        
+      </div>
+    </div>
+ {% endfor %}
+
+  <div class="share-wrapper">
+    <div class="ya-share2" data-curtain="" data-direction="vertical" data-size="s" data-shape="round" data-color-scheme="whiteblack" data-services="vkontakte,facebook,twitter"></div>
+  </div>
+  <div class="additional-info">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="additional-info__title">ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ</div>
+        <div class="additional-info__list">
+          <ul>
+            <li>
+              <a href="3d-vizualizatsiya/zakazat-3d-vizualizatsiyu/index.htm">Заказать 3D визуализацию</a>
+            </li>
+            <li>
+              <a href="3d-modelirovanie/zakazat-3d-modelirovanie/index.htm">Заказать 3D моделирование</a>
+            </li>
+            <li>
+              <a href="3d-modelirovanie/zakazat-3d-model/index.htm">Заказать 3D модель</a>
+            </li>
+            <li>
+              <a href="3d-animatsiya/zakazat-animatsionnyj-rolik/index.htm">Заказать анимационный ролик</a>
+            </li>
+            <li>
+              <a href="3d-vizualizatsiya/stoimost-3d-vizualizatsii/index.htm">Стоимость 3D визуализации</a>
+            </li>
+            <li>
+              <a href="3d-modelirovanie/stoimost-3d-modelirovaniya/index.htm">Стоимость 3D моделирования</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="additional-info__title">РЕКОМЕНДУЕМ ПОЧИТАТЬ</div>
+        <div class="additional-info__list">
+          <ul>
+            <li>
+              <a href="../uslugi-3d-modelirovaniya/index.htm">Услуги 3D моделирования</a>
+            </li>
+            <li>
+              <a href="../remont-3d-vizualizatsiya-dizajn/index.htm">Ремонт: 3D визуализация дизайн</a>
+            </li>
+            <li>
+              <a href="../chto-takoe-3d-modelirovanie/index.htm">Что такое 3D-моделирование?</a>
+            </li>
+            <li>
+              <a href="../chto-takoe-3d-vizualizatsiya/index.htm">Что такое 3D-визуализация?</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% partial 'site/form-bottom' %}
+</div>
+</div>

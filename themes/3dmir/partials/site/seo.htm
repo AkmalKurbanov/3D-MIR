@@ -1,0 +1,36 @@
+
+{% if this.page.fileName == 'post.htm' or this.page.fileName == 'project-detail.htm' or this.page.fileName == 'service-detail.htm' %}
+  
+  <title>{{recordDetail.seo_title}}</title>
+  <meta name="description" content="{{recordDetail.seo_description}}"/>
+  <meta name="keywords" content="{{recordDetail.seo_keywords}}">
+
+  <meta property="og:title" content="{{recordDetail.seo_title}}">
+  <meta property="og:description" content="{{recordDetail.seo_description}}">
+  <meta property="og:url" content="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{recordDetail.seo_title}}">
+  <meta name="twitter:description" content="{{recordDetail.seo_description}}">
+  <meta name="twitter:image" content="{{ this.page.baseFileName|app }}/{{recordDetail.slug}}">
+
+  {% elseif this.page.fileName == 'category.htm' %}
+  
+    <title>{{categoryDetail.seo_title}}</title>
+    <meta name="description" content="{{categoryDetail.seo_description}}"/>
+    <meta name="keywords" content="{{categoryDetail.seo_keywords}}">
+
+    <meta property="og:title" content="{{categoryDetail.seo_title}}">
+    <meta property="og:description" content="{{categoryDetail.seo_description}}">
+    <meta property="og:url" content="{{ this.page.baseFileName|app }}/{{categoryDetail.slug}}">
+
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{categoryDetail.seo_title}}">
+    <meta name="twitter:description" content="{{categoryDetail.seo_description}}">
+    <meta name="twitter:image" content="{{ this.page.baseFileName|app }}/{{categoryDetail.slug}}">
+
+  {% else %}
+    
+{% endif %}

@@ -1,0 +1,41 @@
+<header class="header">
+	<button class="header-menu__btn">
+		<svg class="header-menu__closed" width="35" height="35" viewbox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M1.09372 10.9374H33.9062C34.51 10.9374 34.9999 10.4474 34.9999 9.84372C34.9999 9.23995 34.5099 8.75 33.9062 8.75H1.09372C0.489947 8.75 0 9.24004 0 9.84372C0 10.4474 0.490038 10.9374 1.09372 10.9374Z" fill="#1D1D1B"></path>
+			<path d="M33.9062 16.4062H1.09372C0.489947 16.4062 0 16.8963 0 17.5C0 18.1037 0.490038 18.5937 1.09372 18.5937H33.9062C34.51 18.5937 34.9999 18.1037 34.9999 17.5C34.9999 16.8963 34.51 16.4062 33.9062 16.4062Z" fill="#1D1D1B"></path>
+			<path d="M33.9062 24.0625H12.0312C11.4274 24.0625 10.9375 24.5525 10.9375 25.1562C10.9375 25.76 11.4275 26.2499 12.0312 26.2499H33.9062C34.51 26.2499 34.9999 25.7599 34.9999 25.1562C35 24.5524 34.51 24.0625 33.9062 24.0625Z" fill="#1D1D1B"></path>
+		</svg>
+		<svg class="header-menu__opened" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewbox="0 0 39 39" fill="none">
+			<path d="M37 2L2 37M2 2L37 37" stroke="#131313" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+		</svg>
+	</button>
+
+	 <a href="{{'home'|page}}" class="header__logo">
+      {% set logoPath = this.theme.logo.getPath %}
+			{% set isSvg = logoPath ends with '.svg' %}
+
+			<img
+					src="{% if isSvg %}{{ logoPath }}{% else %}{{ logoPath | resize(136, 'auto', { mode: 'crop', quality: '80', extension: 'webp' }) }}{% endif %}"
+					alt="{{ this.theme.sitename }}"
+					data-lazy-src="{{ logoPath }}"
+			/>
+      </a>
+	<a href="mailto:{{this.theme.email}}" class="header__email">{{this.theme.email}}</a>
+	<a href="tel:{{this.theme.phone}}" class="header__phone">{{this.theme.phone}}</a>
+	<a href="https://api.whatsapp.com/send?phone={{this.theme.whatsapp}}" class="header__social desktop whatsapp" target="_blank"></a>
+	<a href="tg://resolve?domain={{this.theme.telegram}}" class="header__social desktop telegram" target="_blank"></a>
+				<button class="header__modal" data-bs-toggle="modal" data-bs-target="#header-modal">
+		<span class="header__modal-title">отправить заявку</span>
+	</button>
+</header>
+
+
+
+  
+
+
+
+
+
+{% partial 'site/top-menu' %}
+{% partial 'site/popup' %}
